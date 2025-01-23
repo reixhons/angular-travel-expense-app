@@ -1,0 +1,105 @@
+{
+  "trips": [
+    {
+      "id": "1",
+      "name": "Business Trip to NYC",
+      "startDate": "2025-02-01",
+      "endDate": "2025-02-05",
+      "status": "APPROVED",
+      "userId": "101",
+      "approverNote": "All expenses approved."
+    },
+    {
+      "id": "2",
+      "name": "Family Vacation to Disney",
+      "startDate": "2025-03-10",
+      "endDate": "2025-03-15",
+      "status": "PENDING_APPROVAL",
+      "userId": "102"
+    }
+  ],
+  "expenses": [
+    {
+      "id": "1",
+      "type": "CAR_RENTAL",
+      "totalPrice": 300,
+      "tripId": "1",
+      "carName": "Toyota Camry",
+      "pickupDateTime": "2025-02-01T10:00:00Z",
+      "dropoffDateTime": "2025-02-05T10:00:00Z",
+      "pickupLocation": "JFK Airport",
+      "dropoffLocation": "JFK Airport"
+    },
+    {
+      "id": "2",
+      "type": "HOTEL",
+      "totalPrice": 500,
+      "tripId": "1",
+      "hotelName": "Hilton Garden Inn",
+      "location": "NYC",
+      "checkInDate": "2025-02-01",
+      "checkOutDate": "2025-02-05"
+    },
+    {
+      "id": "3",
+      "type": "FLIGHT",
+      "totalPrice": 250,
+      "tripId": "2",
+      "airline": "Delta Airlines",
+      "from": "LAX",
+      "to": "MCO",
+      "departureDateTime": "2025-03-10T08:00:00Z",
+      "arrivalDateTime": "2025-03-10T14:00:00Z"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "email": "user@example.com",
+      "name": "John User",
+      "role": "END_USER",
+      "password": "user"
+    },
+    {
+      "id": "2",
+      "email": "approver@example.com",
+      "name": "Jane Approver",
+      "role": "APPROVER",
+      "password": "approver"
+    },
+    {
+      "id": "3",
+      "email": "finance@example.com",
+      "name": "Bob Finance",
+      "role": "FINANCE",
+      "password": "finance"
+    }
+  ],
+  "sessions": [
+    {
+      "id": "b266",
+      "userId": "1",
+      "createdAt": "2025-01-23T23:13:11.204Z"
+    },
+    {
+      "id": "c172",
+      "userId": "1",
+      "createdAt": "2025-01-23T23:16:53.406Z"
+    },
+    {
+      "id": "b44b",
+      "userId": "3",
+      "createdAt": "2025-01-23T23:17:42.162Z"
+    },
+    {
+      "id": "8315",
+      "userId": "3",
+      "createdAt": "2025-01-23T23:18:07.136Z"
+    },
+    {
+      "id": "234f",
+      "userId": "3",
+      "createdAt": "2025-01-23T23:21:55.143Z"
+    }
+  ]
+}
