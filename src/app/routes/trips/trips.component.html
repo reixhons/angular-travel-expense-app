@@ -1,1 +1,67 @@
-<p>trips works!</p>
+<div class="container mx-auto p-4">
+    <div class="flex justify-between items-center mb-8">
+        <div>
+            <h1 class="text-2xl font-bold">
+                Hello, {{userName()}}
+            </h1>
+            <p class="text-gray-600">Here's your list of trips</p>
+        </div>
+        <div class="flex gap-4">
+            <button mat-raised-button color="primary" [disabled]="isLoading()" (click)="openCustomDialog()">
+                <mat-icon>add</mat-icon>
+                New Trip
+            </button>
+            <button mat-raised-button color="warn" (click)="logout()" [disabled]="isLoading()">
+                <mat-icon>logout</mat-icon>
+                Logout
+            </button>
+        </div>
+    </div>
+
+    @if (error()) {
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        {{ error() }}
+    </div>
+    }
+
+    @if (isLoading()) {
+    <div class="flex justify-center items-center h-64">
+        <mat-spinner diameter="48"></mat-spinner>
+    </div>
+    } @else {
+    @if (!trips().length) {
+    <div class="text-center py-8">
+        <p class="text-gray-500">No trips found. Create your first trip!</p>
+    </div>
+    } @else {
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @for (trip of trips(); track trip.id) {
+        <mat-card class="hover:shadow-lg transition-shadow">
+            <mat-card-header>
+                <mat-card-title>{{ trip.name }}</mat-card-title>
+                <mat-card-subtitle>
+                    Duration: {{ getTripDuration(trip.startDate, trip.endDate) }} days
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content class="p-4">
+                <div class="flex flex-col gap-2">
+                    <p class="text-gray-600">
+                        <mat-icon class="align-middle mr-2">calendar_today</mat-icon>
+                        {{ trip.startDate | date }} - {{ trip.endDate | date }}
+                    </p>
+                    <p class="text-gray-600">
+                        <mat-icon class="align-middle mr-2">attach_money</mat-icon>
+                        Total Expenses: {{ getTripExpenses(trip.id) | currency }}
+                    </p>
+                    <p class="text-gray-600">
+                        <mat-icon class="align-middle mr-2">label</mat-icon>
+                        Status: {{ trip.status }}
+                    </p>
+                </div>
+            </mat-card-content>
+        </mat-card>
+        }
+    </div>
+    }
+    }
+</div>

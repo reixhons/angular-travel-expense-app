@@ -35,7 +35,7 @@ export class AuthService {
         if (user) {
           // Create a session record
           return this.http.post<{ id: string }>(`${this.apiUrl}/sessions`, {
-            userId: user.id,
+            id: user.id,
             createdAt: new Date().toISOString()
           }).pipe(
             tap(() => {
@@ -118,7 +118,7 @@ export class AuthService {
       return of(true);
     }
 
-    return this.http.delete(`${this.apiUrl}/sessions?userId=${userId}`).pipe(
+    return this.http.delete(`${this.apiUrl}/sessions/${userId}`).pipe(
       tap(() => this.currentUser.set(null)),
       map(() => true),
       catchError(error => {

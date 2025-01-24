@@ -1,0 +1,39 @@
+<h1 mat-dialog-title>Custom Dialog</h1>
+<div mat-dialog-content>
+    <ng-container [ngSwitch]="data.message">
+        <div *ngSwitchCase="'newTrip'" class="p-4">
+            <form (ngSubmit)="saveTrip()">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700">Trip Name</label>
+                    <input [(ngModel)]="tripName" name="tripName" required
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700">Start Date</label>
+                    <input type="date" [(ngModel)]="startDate" name="startDate" (change)="updateEndDate()" required
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700">End Date</label>
+                    <input type="date" [(ngModel)]="endDate" name="endDate" required
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700">Trip Duration (days)</label>
+                    <input type="number" [(ngModel)]="duration" name="duration" (input)="updateEndDate()" required
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                </div>
+                <button type="submit"
+                    class="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Save
+                </button>
+            </form>
+        </div>
+        <div *ngSwitchDefault>
+            <p>{{ data.message }}</p>
+        </div>
+    </ng-container>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="closeDialog()">Close</button>
+</div>
