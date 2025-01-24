@@ -1,1 +1,48 @@
-<p>finance works!</p>
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold mb-6">Finance Management</h1>
+
+    <div class="grid gap-6">
+        @for (trip of approvedTrips; track trip.id) {
+        <mat-card class="bg-white rounded-xl shadow-sm">
+            <mat-card-content class="p-6">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-900">{{ trip.name }}</h2>
+                        <p class="text-gray-600 mt-1">
+                            {{ trip.startDate | date }} - {{ trip.endDate | date }}
+                        </p>
+                    </div>
+                    <div class="status-badge" [ngClass]="trip.status.toLowerCase()
+                    ">
+                        {{ trip.status }}
+                    </div>
+                </div>
+
+                <div class="flex gap-4 mt-6">
+                    @if (trip.status === 'APPROVED' || trip.status === 'REFUNDED') {
+                    <button mat-raised-button color="primary" (click)="markAsInProcess(trip.id)"
+                        class="!bg-blue-600 hover:!bg-blue-700">
+                        <mat-icon>pending_actions</mat-icon>
+                        Mark as In Process
+                    </button>
+                    }
+
+                    @if (trip.status === 'IN_PROCESS' || trip.status === 'APPROVED') {
+                    <button mat-raised-button color="accent" (click)="markAsRefunded(trip.id)"
+                        class="!bg-green-600 hover:!bg-green-700">
+                        <mat-icon>paid</mat-icon>
+                        Mark as Refunded
+                    </button>
+                    }
+                </div>
+            </mat-card-content>
+        </mat-card>
+        }
+
+        @if (approvedTrips.length === 0) {
+        <div class="text-center py-8 text-gray-500">
+            No trips to process
+        </div>
+        }
+    </div>
+</div>

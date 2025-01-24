@@ -181,7 +181,7 @@ export class CustomDialogComponent {
         })
       };
 
-      this.tripService.createExpense(expenseData).subscribe({
+      this.tripService.addExpense(expenseData).subscribe({
         next: () => this.dialogRef.close(true),
         error: (err) => console.error('Failed to create expense:', err)
       });

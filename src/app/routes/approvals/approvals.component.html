@@ -1,1 +1,96 @@
-<p>approvals works!</p>
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold mb-6">Pending Approvals</h1>
+
+    <div class="grid gap-6">
+        @for (trip of pendingTrips; track trip.id) {
+        <mat-card class="bg-white rounded-xl shadow-sm">
+            <mat-card-content class="p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-900">{{ trip.name }}</h2>
+                        <p class="text-gray-600 mt-1">
+                            {{ trip.startDate | date }} - {{ trip.endDate | date }}
+                        </p>
+                    </div>
+                    <div class="status-badge status-pending">
+                        {{ trip.status }}
+                    </div>
+                </div>
+
+                <!-- Expenses Section -->
+                <div class="mt-6 bg-gray-50 rounded-lg p-4">
+                    <h3 class="text-lg font-semibold mb-4">Expenses (Total: {{ getTotalExpenses(trip.id) | currency }})
+                    </h3>
+                    <div class="space-y-4">
+                        @for (expense of tripExpenses[trip.id]; track expense.id) {
+                        <div class="bg-white p-4 rounded-lg shadow-sm">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <p class="font-medium">{{ expense.type }}</p>
+                                    <p class="text-gray-600">{{ expense.totalPrice | currency }}</p>
+                                </div>
+                                @if (expense.type === 'FLIGHT') {
+                                <div class="text-sm text-gray-600">
+                                    <p>{{ expense.airline }}</p>
+                                    <p>{{ expense.from }} → {{ expense.to }}</p>
+                                    <p>{{ expense.departureDateTime | date:'medium' }}</p>
+                                </div>
+                                }
+                                @if (expense.type === 'HOTEL') {
+                                <div class="text-sm text-gray-600">
+                                    <p>{{ expense.hotelName }}</p>
+                                    <p>{{ expense.location }}</p>
+                                    <p>{{ expense.checkInDate | date }} - {{ expense.checkOutDate | date }}</p>
+                                </div>
+                                }
+                                @if (expense.type === 'CAR_RENTAL') {
+                                <div class="text-sm text-gray-600">
+                                    <p>{{ expense.carName }}</p>
+                                    <p>{{ expense.pickupLocation }} - {{ expense.dropoffLocation }}</p>
+                                    <p>{{ expense.pickupDateTime | date:'medium' }}</p>
+                                </div>
+                                }
+                                @if (expense.type === 'TAXI') {
+                                <div class="text-sm text-gray-600">
+                                    <p>{{ expense.from }} → {{ expense.to }}</p>
+                                    <p>{{ expense.dateTime | date:'medium' }}</p>
+                                </div>
+                                }
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <mat-form-field class="w-full">
+                        <mat-label>Approver Note</mat-label>
+                        <textarea matInput [(ngModel)]="approverNotes[trip.id]"
+                            placeholder="Add your notes here..."></textarea>
+                    </mat-form-field>
+                </div>
+
+                <div class="flex gap-4 mt-4">
+                    <button mat-raised-button color="primary" (click)="approveTrip(trip.id)"
+                        class="!bg-green-600 hover:!bg-green-700">
+                        <mat-icon>check</mat-icon>
+                        Approve
+                    </button>
+
+                    <button mat-raised-button color="warn" (click)="cancelTrip(trip.id)"
+                        class="!bg-red-600 hover:!bg-red-700">
+                        <mat-icon>close</mat-icon>
+                        Cancel
+                    </button>
+                </div>
+            </mat-card-content>
+        </mat-card>
+        }
+
+        @if (pendingTrips.length === 0) {
+        <div class="text-center py-8 text-gray-500">
+            No trips pending approval
+        </div>
+        }
+    </div>
+</div>

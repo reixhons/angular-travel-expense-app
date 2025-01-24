@@ -5,7 +5,7 @@
       "name": "Business Trip to NYC",
       "startDate": "2025-02-01",
       "endDate": "2025-02-05",
-      "status": "APPROVED",
+      "status": "REFUNDED",
       "userId": "101",
       "approverNote": "All expenses approved."
     },
@@ -14,7 +14,7 @@
       "name": "Family Vacation to Disney",
       "startDate": "2025-03-10",
       "endDate": "2025-03-15",
-      "status": "PENDING_APPROVAL",
+      "status": "CANCELLED",
       "userId": "102"
     },
     {
@@ -23,7 +23,7 @@
       "startDate": "2025-01-04",
       "endDate": "2025-02-05",
       "userId": "1",
-      "status": "PENDING_APPROVAL"
+      "status": "REFUNDED"
     },
     {
       "id": "1163",
@@ -31,7 +31,7 @@
       "startDate": "2025-01-24T08:12:44.508Z",
       "endDate": "2025-01-24T08:12:44.508Z",
       "userId": "1",
-      "status": "PENDING_APPROVAL"
+      "status": "IN_PROCESS"
     },
     {
       "id": "c26d",
@@ -39,7 +39,7 @@
       "startDate": "2025-01-02",
       "endDate": "2025-01-30",
       "userId": "1",
-      "status": "PENDING_APPROVAL"
+      "status": "REFUNDED"
     },
     {
       "id": "bbca",
@@ -47,7 +47,7 @@
       "startDate": "2025-01-08",
       "endDate": "2025-01-03",
       "userId": "1",
-      "status": "PENDING_APPROVAL"
+      "status": "REFUNDED"
     },
     {
       "id": "fb3c",
@@ -55,7 +55,7 @@
       "startDate": "2025-01-24T09:04:26.528Z",
       "endDate": "2025-01-24T09:04:26.528Z",
       "userId": "1",
-      "status": "PENDING_APPROVAL"
+      "status": "REFUNDED"
     },
     {
       "id": "818b",
@@ -63,7 +63,74 @@
       "startDate": "2025-01-24T09:05:20.258Z",
       "endDate": "2025-01-24T09:05:20.258Z",
       "userId": "1",
-      "status": "PENDING_APPROVAL"
+      "status": "CANCELLED"
+    },
+    {
+      "id": "bd55",
+      "name": "Opa la ",
+      "startDate": "2025-01-09",
+      "endDate": "2025-01-31",
+      "userId": "1",
+      "status": "REFUNDED"
+    },
+    {
+      "id": "74e2",
+      "name": "qqqqqqqqqq",
+      "startDate": "2025-01-15",
+      "endDate": "2025-01-30",
+      "userId": "1",
+      "status": "REFUNDED",
+      "approverNote": "Bravo bosi"
+    },
+    {
+      "id": "6c50",
+      "name": "aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "startDate": "2025-01-24T09:22:00.963Z",
+      "endDate": "2025-01-24T09:22:00.963Z",
+      "userId": "1",
+      "status": "CANCELLED"
+    },
+    {
+      "id": "4c13",
+      "name": "zz",
+      "startDate": "2025-01-24T09:35:31.915Z",
+      "endDate": "2025-01-24T09:35:31.915Z",
+      "userId": "1",
+      "status": "IN_PROCESS",
+      "approverNote": "Bravo xxioooo"
+    },
+    {
+      "id": "18d8",
+      "name": "kkkkkkkkkkk",
+      "startDate": "2025-01-24T09:42:04.767Z",
+      "endDate": "2025-01-24T09:42:04.767Z",
+      "userId": "1",
+      "status": "REFUNDED",
+      "approverNote": "Note"
+    },
+    {
+      "id": "e5ba",
+      "name": "cxzccxc",
+      "startDate": "2025-01-24T09:42:28.938Z",
+      "endDate": "2025-01-24T09:42:28.938Z",
+      "userId": "1",
+      "status": "DRAFT"
+    },
+    {
+      "id": "ffd3",
+      "name": "dddddsadasdasd",
+      "startDate": "2025-01-24T10:02:38.831Z",
+      "endDate": "2025-01-24T10:02:38.831Z",
+      "userId": "1",
+      "status": "REFUNDED"
+    },
+    {
+      "id": "7074",
+      "name": "ddddd",
+      "startDate": "2025-01-14",
+      "endDate": "2025-01-24T10:20:53.555Z",
+      "userId": "1",
+      "status": "DRAFT"
     }
   ],
   "expenses": [
@@ -142,6 +209,93 @@
       "to": "Usa",
       "departureDateTime": "2025-01-05T09:01",
       "arrivalDateTime": "2025-01-02T11:58"
+    },
+    {
+      "id": "13e8",
+      "type": "FLIGHT",
+      "totalPrice": 0,
+      "tripId": "818b",
+      "airline": "asddas",
+      "from": "sadds",
+      "to": "sadd",
+      "departureDateTime": "2025-01-24T09:11:09.939Z",
+      "arrivalDateTime": "2025-01-24T09:11:09.939Z"
+    },
+    {
+      "id": "7650",
+      "type": "FLIGHT",
+      "totalPrice": 11,
+      "tripId": "74e2",
+      "airline": "Lufthansa",
+      "from": "Monac",
+      "to": "F",
+      "departureDateTime": "2025-01-08T01:18",
+      "arrivalDateTime": "2025-01-24T09:18:39.966Z"
+    },
+    {
+      "id": "0059",
+      "type": "FLIGHT",
+      "totalPrice": 33333,
+      "tripId": "74e2",
+      "airline": "wwwwwwwwwwwwwwwwwww",
+      "from": "ddd",
+      "to": "ddd",
+      "departureDateTime": "2025-01-12T01:19",
+      "arrivalDateTime": "2025-01-24T09:19:00.844Z"
+    },
+    {
+      "id": "3e30",
+      "type": "FLIGHT",
+      "totalPrice": 343434,
+      "tripId": "6c50",
+      "airline": "43434343",
+      "from": "",
+      "to": "",
+      "departureDateTime": "2025-01-24T09:22:11.167Z",
+      "arrivalDateTime": "2025-01-24T09:22:11.167Z"
+    },
+    {
+      "id": "fb86",
+      "type": "FLIGHT",
+      "totalPrice": 16,
+      "tripId": "bbca",
+      "airline": "asddas",
+      "from": "Monaco",
+      "to": "F",
+      "departureDateTime": "2025-01-03T00:24",
+      "arrivalDateTime": "2025-01-03T10:27"
+    },
+    {
+      "id": "9235",
+      "type": "HOTEL",
+      "totalPrice": 0,
+      "tripId": "4c13",
+      "hotelName": "ffffffd",
+      "location": "fdsfsdfsdfsd",
+      "checkInDate": "2025-01-07",
+      "checkOutDate": "2025-01-24T09:38:32.165Z"
+    },
+    {
+      "id": "543f",
+      "type": "FLIGHT",
+      "totalPrice": 11,
+      "tripId": "e5ba",
+      "airline": "",
+      "from": "",
+      "to": "",
+      "departureDateTime": "2025-01-24T09:48:19.781Z",
+      "arrivalDateTime": "2025-01-24T09:48:19.781Z"
+    },
+    {
+      "id": "4f9e",
+      "type": "FLIGHT",
+      "totalPrice": 0,
+      "tripId": "18d8",
+      "airline": "asddsd",
+      "from": "asddsdas",
+      "to": "",
+      "departureDateTime": "2025-01-22T02:58",
+      "arrivalDateTime": "2025-01-24T09:58:00.837Z"
     }
   ],
   "users": [
@@ -150,52 +304,24 @@
       "email": "user@example.com",
       "name": "John User",
       "role": "END_USER",
-      "password": "user"
+      "password": "123"
     },
     {
       "id": "2",
       "email": "approver@example.com",
       "name": "Jane Approver",
       "role": "APPROVER",
-      "password": "approver"
+      "password": "123"
     },
     {
       "id": "3",
       "email": "finance@example.com",
       "name": "Bob Finance",
       "role": "FINANCE",
-      "password": "finance"
+      "password": "123"
     }
   ],
   "sessions": [
-    {
-      "id": "1",
-      "createdAt": "2025-01-24T04:02:15.821Z"
-    },
-    {
-      "id": "1",
-      "createdAt": "2025-01-24T04:03:18.763Z"
-    },
-    {
-      "id": "1",
-      "createdAt": "2025-01-24T04:03:25.332Z"
-    },
-    {
-      "id": "1",
-      "createdAt": "2025-01-24T04:09:42.386Z"
-    },
-    {
-      "id": "1",
-      "createdAt": "2025-01-24T04:25:17.115Z"
-    },
-    {
-      "id": "1",
-      "createdAt": "2025-01-24T05:56:30.959Z"
-    },
-    {
-      "id": "1",
-      "createdAt": "2025-01-24T07:09:58.716Z"
-    },
     {
       "id": "1",
       "createdAt": "2025-01-24T08:12:10.746Z"
@@ -219,6 +345,138 @@
     {
       "id": "1",
       "createdAt": "2025-01-24T08:43:29.117Z"
+    },
+    {
+      "id": "3",
+      "createdAt": "2025-01-24T09:14:44.135Z"
+    },
+    {
+      "id": "2",
+      "createdAt": "2025-01-24T09:16:04.331Z"
+    },
+    {
+      "id": "1",
+      "createdAt": "2025-01-24T09:16:44.923Z"
+    },
+    {
+      "id": "2",
+      "createdAt": "2025-01-24T09:17:34.387Z"
+    },
+    {
+      "id": "1",
+      "createdAt": "2025-01-24T09:18:06.303Z"
+    },
+    {
+      "id": "2",
+      "createdAt": "2025-01-24T09:19:35.087Z"
+    },
+    {
+      "id": "1",
+      "createdAt": "2025-01-24T09:19:49.800Z"
+    },
+    {
+      "id": "3",
+      "createdAt": "2025-01-24T09:21:00.111Z"
+    },
+    {
+      "id": "2",
+      "createdAt": "2025-01-24T09:21:52.342Z"
+    },
+    {
+      "id": "1",
+      "createdAt": "2025-01-24T09:21:58.259Z"
+    },
+    {
+      "id": "2",
+      "createdAt": "2025-01-24T09:22:33.509Z"
+    },
+    {
+      "id": "1",
+      "createdAt": "2025-01-24T09:23:11.730Z"
+    },
+    {
+      "id": "1",
+      "createdAt": "2025-01-24T09:23:21.077Z"
+    },
+    {
+      "id": "2",
+      "createdAt": "2025-01-24T09:38:53.765Z"
+    },
+    {
+      "id": "1",
+      "createdAt": "2025-01-24T09:42:03.067Z"
+    },
+    {
+      "id": "2",
+      "createdAt": "2025-01-24T09:43:25.867Z"
+    },
+    {
+      "id": "1",
+      "createdAt": "2025-01-24T09:45:50.619Z"
+    },
+    {
+      "id": "1",
+      "createdAt": "2025-01-24T09:48:02.188Z"
+    },
+    {
+      "id": "1",
+      "createdAt": "2025-01-24T09:48:46.708Z"
+    },
+    {
+      "id": "2",
+      "createdAt": "2025-01-24T09:48:51.673Z"
+    },
+    {
+      "id": "3",
+      "createdAt": "2025-01-24T09:54:59.338Z"
+    },
+    {
+      "id": "1",
+      "createdAt": "2025-01-24T09:57:42.980Z"
+    },
+    {
+      "id": "2",
+      "createdAt": "2025-01-24T09:58:59.223Z"
+    },
+    {
+      "id": "3",
+      "createdAt": "2025-01-24T10:00:20.671Z"
+    },
+    {
+      "id": "1",
+      "createdAt": "2025-01-24T10:00:42.585Z"
+    },
+    {
+      "id": "3",
+      "createdAt": "2025-01-24T10:03:27.590Z"
+    },
+    {
+      "id": "2",
+      "createdAt": "2025-01-24T10:08:31.736Z"
+    },
+    {
+      "id": "2",
+      "createdAt": "2025-01-24T10:08:38.108Z"
+    },
+    {
+      "id": "3",
+      "createdAt": "2025-01-24T10:12:49.847Z"
+    },
+    {
+      "id": "2",
+      "createdAt": "2025-01-24T10:17:45.851Z"
+    },
+    {
+      "id": "2",
+      "createdAt": "2025-01-24T10:19:56.723Z"
+    },
+    {
+      "id": "1",
+      "createdAt": "2025-01-24T10:20:04.421Z"
+    },
+    {
+      "id": "1",
+      "createdAt": "2025-01-24T10:23:28.603Z"
     }
   ]
 }

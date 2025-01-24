@@ -5,11 +5,11 @@
             <div class="mb-8">
                 <div class="flex justify-between items-center">
                     <h1 class="text-3xl font-bold text-gray-900 mb-6">{{ trip?.name }}</h1>
-                    <div class="flex items-center gap-3 mb-6">
+                    <div class="flex items-center z-10 gap-3 mb-6">
                         <mat-form-field appearance="fill" class="w-40">
                             <mat-label>Expense Type</mat-label>
                             <mat-select [(ngModel)]="selectedExpenseType">
-                                <mat-option value="" disabled selected>Expense Type</mat-option>
+                                <mat-option value="" disabled>Expense Type</mat-option>
                                 <mat-option value="FLIGHT">Flight</mat-option>
                                 <mat-option value="HOTEL">Hotel</mat-option>
                                 <mat-option value="CAR_RENTAL">Car Rental</mat-option>
@@ -18,7 +18,7 @@
                         </mat-form-field>
                         <button mat-raised-button color="primary"
                             class="!rounded-xl !px-6 !py-2 !shadow-md hover:!shadow-lg transition-shadow"
-                            [disabled]="!selectedExpenseType" (click)="addNewExpense()">
+                            [disabled]="!selectedExpenseType || trip?.status !== 'DRAFT'" (click)="addNewExpense()">
                             <mat-icon>add</mat-icon>
                             New Expense
                         </button>

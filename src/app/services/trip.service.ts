@@ -80,21 +80,21 @@ export class TripService {
     return this.expensesMap()?.get(tripId) || 0;
   }
 
-  updateTripStatus(tripId: string, status: TripStatus): Observable<Trip> {
-    const updatedFields = { status };
+  updateTripStatus(tripId: string, status: TripStatus, note?: string): Observable<Trip> {
+    const updateData: Partial<Trip> = {
+      status,
+      ...(note && { approverNote: note })
+    };
 
-    return this.http.patch<Trip>(`${this.apiUrl}/trips/${tripId}`, updatedFields).pipe(
+    return this.http.patch<Trip>(`${this.apiUrl}/trips/${tripId}`, updateData).pipe(
+      tap(updatedTrip => {
+        this.tripsSignal.update(trips =>
+          trips.map(t => t.id === tripId ? updatedTrip : t)
+        );
+      }),
       catchError(error => {
         console.error('Failed to update trip status:', error);
         return throwError(() => error);
-      }),
-      tap(updatedTrip => {
-        if (updatedTrip) {
-          const trips = this.trips().map(trip =>
-            trip.id === tripId ? { ...trip, status: updatedTrip.status } : trip
-          );
-          this.tripsSignal.set(trips);
-        }
       })
     );
   }
@@ -158,17 +158,22 @@ export class TripService {
     );
   }
 
-  createExpense(expenseData: any): Observable<Expense> {
+  getTripsByStatus(status: TripStatus): Observable<Trip[]> {
+    return this.http.get<Trip[]>(`${this.apiUrl}/trips?status=${status}`).pipe(
+      catchError(error => {
+        console.error('Failed to load trips:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  addExpense(expenseData: any): Observable<any> {
     this.isLoadingSignal.set(true);
     this.errorSignal.set(null);
 
-    return this.http.post<Expense>(`${this.apiUrl}/expenses`, expenseData).pipe(
+    return this.http.post<any>(`${this.apiUrl}/expenses`, expenseData).pipe(
       tap(newExpense => {
-        this.expensesMap.update(map => {
-          const currentTotal = map.get(newExpense.tripId) || 0;
-          map.set(newExpense.tripId, currentTotal + newExpense.totalPrice);
-          return map;
-        });
+        this.loadTripExpenses(newExpense.tripId);
       }),
       catchError(error => {
         this.errorSignal.set('Failed to create expense');
@@ -178,11 +183,11 @@ export class TripService {
     );
   }
 
-  updateExpense(expenseId: string, expenseData: any): Observable<Expense> {
+  updateExpense(expenseId: string, expenseData: any): Observable<any> {
     this.isLoadingSignal.set(true);
     this.errorSignal.set(null);
 
-    return this.http.patch<Expense>(`${this.apiUrl}/expenses/${expenseId}`, expenseData).pipe(
+    return this.http.patch<any>(`${this.apiUrl}/expenses/${expenseId}`, expenseData).pipe(
       tap(updatedExpense => {
         this.loadTripExpenses(updatedExpense.tripId);
       }),

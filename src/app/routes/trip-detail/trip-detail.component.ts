@@ -40,6 +40,7 @@ export class TripDetailComponent implements OnInit {
   expenses: Expense[] = [];
   displayedColumns: string[] = ['type', 'details', 'date', 'totalPrice', 'actions'];
   selectedExpenseType: 'FLIGHT' | 'HOTEL' | 'CAR_RENTAL' | 'TAXI' = 'FLIGHT';
+  isApprover: boolean = false;
 
   constructor(private dialog: MatDialog) { }
 
@@ -47,6 +48,11 @@ export class TripDetailComponent implements OnInit {
     const tripId = this.route.snapshot.paramMap.get('id');
     if (tripId) {
       this.loadTripDetails(tripId);
+      this.tripService.getTrip(tripId).subscribe({
+        next: (trip) => {
+          this.isApprover = trip.status === TripStatus.PENDING_APPROVAL;
+        }
+      });
     }
   }
 
@@ -119,6 +125,10 @@ export class TripDetailComponent implements OnInit {
   }
 
   editExpense(expense: Expense) {
+    if (this.isApprover) {
+      console.warn('Approvers cannot edit expenses.');
+      return;
+    }
     const dialogRef = this.dialog.open(CustomDialogComponent, {
       width: '600px',
       data: {
