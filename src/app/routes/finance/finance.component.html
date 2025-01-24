@@ -1,48 +1,84 @@
-<div class="container mx-auto px-4 py-8">
-    <h1 class="text-2xl font-bold mb-6">Finance Management</h1>
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-12">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-2xl shadow-lg p-8 backdrop-blur-lg bg-opacity-90">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-8">
+                <div>
+                    <h1
+                        class="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-blue-500 bg-clip-text text-transparent">
+                        Finance Management
+                    </h1>
+                    <p class="text-gray-600 mt-2">Track and manage trip expenses</p>
+                </div>
+                <div class="flex flex-col sm:flex-row items-end sm:items-center gap-4">
+                    <div class="bg-white rounded-xl p-4 shadow-md border border-gray-100">
+                        <p class="text-sm text-gray-500">Total Budget</p>
+                        <p class="text-2xl font-bold text-indigo-600">$10,000</p>
+                    </div>
+                    <div class="bg-white rounded-xl p-4 shadow-md border border-gray-100">
+                        <p class="text-sm text-gray-500">Spent</p>
+                        <p class="text-2xl font-bold text-green-600">$3,500</p>
+                    </div>
+                </div>
+            </div>
 
-    <div class="grid gap-6">
-        @for (trip of approvedTrips; track trip.id) {
-        <mat-card class="bg-white rounded-xl shadow-sm">
-            <mat-card-content class="p-6">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <h2 class="text-xl font-semibold text-gray-900">{{ trip.name }}</h2>
-                        <p class="text-gray-600 mt-1">
-                            {{ trip.startDate | date }} - {{ trip.endDate | date }}
+            <div class="space-y-6">
+                @for (trip of approvedTrips; track trip.id) {
+                <div
+                    class="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-200 border border-gray-100 overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center">
+                                    <mat-icon class="text-indigo-600">flight_takeoff</mat-icon>
+                                </div>
+                                <div>
+                                    <h2 class="text-xl font-semibold text-gray-900">{{ trip.name }}</h2>
+                                    <p class="text-gray-600">
+                                        {{ trip.startDate | date }} - {{ trip.endDate | date }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div [class]="'status-badge ' + trip.status.toLowerCase()">
+                                {{ trip.status }}
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap gap-4 mt-6">
+                            @if (trip.status === 'APPROVED' || trip.status === 'REFUNDED') {
+                            <button mat-raised-button
+                                class="!rounded-xl !px-6 !py-2.5 !bg-gradient-to-r !from-blue-600 !to-blue-500 !shadow-lg hover:!shadow-xl !border-0 transition-all duration-200"
+                                (click)="markAsInProcess(trip.id)">
+                                <mat-icon class="mr-2">pending_actions</mat-icon>
+                                Mark as In Process
+                            </button>
+                            }
+
+                            @if (trip.status === 'IN_PROCESS' || trip.status === 'APPROVED') {
+                            <button mat-raised-button
+                                class="!rounded-xl !px-6 !py-2.5 !bg-gradient-to-r !from-green-600 !to-green-500 !shadow-lg hover:!shadow-xl !border-0 transition-all duration-200"
+                                (click)="markAsRefunded(trip.id)">
+                                <mat-icon class="mr-2">paid</mat-icon>
+                                Mark as Refunded
+                            </button>
+                            }
+                        </div>
+                    </div>
+                </div>
+                }
+
+                @if (approvedTrips.length === 0) {
+                <div class="text-center py-20 bg-white rounded-2xl shadow-lg backdrop-blur-lg bg-opacity-90">
+                    <div class="flex flex-col items-center gap-4">
+                        <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mb-2">
+                            <mat-icon class="text-gray-400 !w-12 !h-12 !text-5xl">receipt_long</mat-icon>
+                        </div>
+                        <h2 class="text-2xl font-semibold text-gray-800">No trips to process</h2>
+                        <p class="text-gray-600 max-w-md">When trips are approved, they will appear here for processing
                         </p>
                     </div>
-                    <div class="status-badge" [ngClass]="trip.status.toLowerCase()
-                    ">
-                        {{ trip.status }}
-                    </div>
                 </div>
-
-                <div class="flex gap-4 mt-6">
-                    @if (trip.status === 'APPROVED' || trip.status === 'REFUNDED') {
-                    <button mat-raised-button color="primary" (click)="markAsInProcess(trip.id)"
-                        class="!bg-blue-600 hover:!bg-blue-700">
-                        <mat-icon>pending_actions</mat-icon>
-                        Mark as In Process
-                    </button>
-                    }
-
-                    @if (trip.status === 'IN_PROCESS' || trip.status === 'APPROVED') {
-                    <button mat-raised-button color="accent" (click)="markAsRefunded(trip.id)"
-                        class="!bg-green-600 hover:!bg-green-700">
-                        <mat-icon>paid</mat-icon>
-                        Mark as Refunded
-                    </button>
-                    }
-                </div>
-            </mat-card-content>
-        </mat-card>
-        }
-
-        @if (approvedTrips.length === 0) {
-        <div class="text-center py-8 text-gray-500">
-            No trips to process
+                }
+            </div>
         </div>
-        }
     </div>
 </div>

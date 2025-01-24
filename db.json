@@ -5,7 +5,7 @@
       "name": "Business Trip to NYC",
       "startDate": "2025-02-01",
       "endDate": "2025-02-05",
-      "status": "REFUNDED",
+      "status": "IN_PROCESS",
       "userId": "101",
       "approverNote": "All expenses approved."
     },
@@ -31,7 +31,7 @@
       "startDate": "2025-01-24T08:12:44.508Z",
       "endDate": "2025-01-24T08:12:44.508Z",
       "userId": "1",
-      "status": "IN_PROCESS"
+      "status": "REFUNDED"
     },
     {
       "id": "c26d",
@@ -39,7 +39,7 @@
       "startDate": "2025-01-02",
       "endDate": "2025-01-30",
       "userId": "1",
-      "status": "REFUNDED"
+      "status": "IN_PROCESS"
     },
     {
       "id": "bbca",
@@ -96,7 +96,7 @@
       "startDate": "2025-01-24T09:35:31.915Z",
       "endDate": "2025-01-24T09:35:31.915Z",
       "userId": "1",
-      "status": "IN_PROCESS",
+      "status": "REFUNDED",
       "approverNote": "Bravo xxioooo"
     },
     {
@@ -114,7 +114,8 @@
       "startDate": "2025-01-24T09:42:28.938Z",
       "endDate": "2025-01-24T09:42:28.938Z",
       "userId": "1",
-      "status": "DRAFT"
+      "status": "APPROVED",
+      "approverNote": "sdasdasdasdasdasdsddsad"
     },
     {
       "id": "ffd3",
@@ -324,10 +325,6 @@
   "sessions": [
     {
       "id": "1",
-      "createdAt": "2025-01-24T08:12:10.746Z"
-    },
-    {
-      "id": "1",
       "createdAt": "2025-01-24T08:20:26.128Z"
     },
     {
@@ -477,6 +474,34 @@
     {
       "id": "1",
       "createdAt": "2025-01-24T10:23:28.603Z"
+    },
+    {
+      "id": "1",
+      "createdAt": "2025-01-24T10:26:22.999Z"
+    },
+    {
+      "id": "1",
+      "createdAt": "2025-01-24T10:40:56.368Z"
+    },
+    {
+      "id": "3",
+      "createdAt": "2025-01-24T10:44:46.121Z"
+    },
+    {
+      "id": "1",
+      "createdAt": "2025-01-24T10:45:21.100Z"
+    },
+    {
+      "id": "1",
+      "createdAt": "2025-01-24T10:49:36.968Z"
+    },
+    {
+      "id": "1",
+      "createdAt": "2025-01-24T10:49:49.775Z"
+    },
+    {
+      "id": "2",
+      "createdAt": "2025-01-24T10:51:09.625Z"
     }
   ]
 }

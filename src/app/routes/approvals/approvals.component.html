@@ -1,96 +1,119 @@
-<div class="container mx-auto px-4 py-8">
-    <h1 class="text-2xl font-bold mb-6">Pending Approvals</h1>
-
-    <div class="grid gap-6">
-        @for (trip of pendingTrips; track trip.id) {
-        <mat-card class="bg-white rounded-xl shadow-sm">
-            <mat-card-content class="p-6">
-                <div class="flex justify-between items-start mb-4">
-                    <div>
-                        <h2 class="text-xl font-semibold text-gray-900">{{ trip.name }}</h2>
-                        <p class="text-gray-600 mt-1">
-                            {{ trip.startDate | date }} - {{ trip.endDate | date }}
-                        </p>
-                    </div>
-                    <div class="status-badge status-pending">
-                        {{ trip.status }}
-                    </div>
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-12">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header Section -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8 backdrop-blur-lg bg-opacity-90">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+                <div class="space-y-2">
+                    <h1
+                        class="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-blue-500 bg-clip-text text-transparent">
+                        Pending Approvals
+                    </h1>
+                    <p class="text-gray-600">Review and manage travel requests</p>
                 </div>
+                <div class="bg-indigo-50 rounded-xl p-4 shadow-sm border border-indigo-100">
+                    <p class="text-sm text-indigo-600 font-medium">Pending Requests</p>
+                    <p class="text-2xl font-bold text-indigo-700">{{ pendingTrips.length }}</p>
+                </div>
+            </div>
+        </div>
 
-                <!-- Expenses Section -->
-                <div class="mt-6 bg-gray-50 rounded-lg p-4">
-                    <h3 class="text-lg font-semibold mb-4">Expenses (Total: {{ getTotalExpenses(trip.id) | currency }})
-                    </h3>
-                    <div class="space-y-4">
-                        @for (expense of tripExpenses[trip.id]; track expense.id) {
-                        <div class="bg-white p-4 rounded-lg shadow-sm">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <p class="font-medium">{{ expense.type }}</p>
-                                    <p class="text-gray-600">{{ expense.totalPrice | currency }}</p>
-                                </div>
-                                @if (expense.type === 'FLIGHT') {
-                                <div class="text-sm text-gray-600">
-                                    <p>{{ expense.airline }}</p>
-                                    <p>{{ expense.from }} → {{ expense.to }}</p>
-                                    <p>{{ expense.departureDateTime | date:'medium' }}</p>
-                                </div>
-                                }
-                                @if (expense.type === 'HOTEL') {
-                                <div class="text-sm text-gray-600">
-                                    <p>{{ expense.hotelName }}</p>
-                                    <p>{{ expense.location }}</p>
-                                    <p>{{ expense.checkInDate | date }} - {{ expense.checkOutDate | date }}</p>
-                                </div>
-                                }
-                                @if (expense.type === 'CAR_RENTAL') {
-                                <div class="text-sm text-gray-600">
-                                    <p>{{ expense.carName }}</p>
-                                    <p>{{ expense.pickupLocation }} - {{ expense.dropoffLocation }}</p>
-                                    <p>{{ expense.pickupDateTime | date:'medium' }}</p>
-                                </div>
-                                }
-                                @if (expense.type === 'TAXI') {
-                                <div class="text-sm text-gray-600">
-                                    <p>{{ expense.from }} → {{ expense.to }}</p>
-                                    <p>{{ expense.dateTime | date:'medium' }}</p>
+        <!-- Trips Grid -->
+        <div class="grid gap-6">
+            @for (trip of pendingTrips; track trip.id) {
+            <div
+                class="bg-white rounded-2xl shadow-lg p-8 backdrop-blur-lg bg-opacity-90 transition-all duration-200 hover:shadow-xl">
+                <div class="flex flex-col lg:flex-row justify-between gap-6">
+                    <!-- Trip Details -->
+                    <div class="flex-1 space-y-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h2 class="text-2xl font-semibold text-gray-900">{{ trip.name }}</h2>
+                                <p class="text-gray-600 mt-1">
+                                    {{ trip.startDate | date }} - {{ trip.endDate | date }}
+                                </p>
+                            </div>
+                            <div class="status-badge status-pending">
+                                {{ trip.status }}
+                            </div>
+                        </div>
+
+                        <!-- Expenses Section -->
+                        <div class="bg-gray-50 rounded-xl p-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                                <mat-icon class="text-gray-600">receipt_long</mat-icon>
+                                Expenses (Total: {{ getTotalExpenses(trip.id) | currency }})
+                            </h3>
+                            <div class="space-y-4">
+                                @for (expense of tripExpenses[trip.id]; track expense.id) {
+                                <div
+                                    class="bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-200">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <p class="font-medium text-gray-900">{{ expense.type }}</p>
+                                            <p class="text-gray-600">{{ expense.totalPrice | currency }}</p>
+                                        </div>
+                                        @if (expense.type === 'FLIGHT') {
+                                        <div class="text-sm text-gray-600">
+                                            <p class="font-medium">{{ expense.airline }}</p>
+                                            <p>{{ expense.from }} → {{ expense.to }}</p>
+                                            <p>{{ expense.departureDateTime | date:'medium' }}</p>
+                                        </div>
+                                        }
+                                        @if (expense.type === 'HOTEL') {
+                                        <div class="text-sm text-gray-600">
+                                            <p class="font-medium">{{ expense.hotelName }}</p>
+                                            <p>{{ expense.location }}</p>
+                                            <p>{{ expense.checkInDate | date }} - {{ expense.checkOutDate | date }}</p>
+                                        </div>
+                                        }
+                                    </div>
                                 </div>
                                 }
                             </div>
                         </div>
-                        }
+                    </div>
+
+                    <!-- Approval Actions -->
+                    <div class="lg:w-96 space-y-6">
+                        <div class="bg-gray-50 rounded-xl p-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                                <mat-icon class="text-gray-600">note</mat-icon>
+                                Approver Note
+                            </h3>
+                            <mat-form-field class="w-full">
+                                <textarea matInput [(ngModel)]="approverNotes[trip.id]" rows="4"
+                                    placeholder="Add your comments here..."
+                                    class="w-full p-3 rounded-xl border border-gray-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200">
+                                </textarea>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <button mat-raised-button (click)="approveTrip(trip.id)"
+                                class="flex-1 !bg-gradient-to-r !from-green-600 !to-green-500 !text-white">
+                                <mat-icon>check_circle</mat-icon>
+                                Approve
+                            </button>
+                            <button mat-raised-button (click)="cancelTrip(trip.id)"
+                                class="flex-1 !bg-gradient-to-r !from-red-600 !to-red-500 !text-white">
+                                <mat-icon>cancel</mat-icon>
+                                Reject
+                            </button>
+                        </div>
                     </div>
                 </div>
+            </div>
+            }
 
-                <div class="mt-4">
-                    <mat-form-field class="w-full">
-                        <mat-label>Approver Note</mat-label>
-                        <textarea matInput [(ngModel)]="approverNotes[trip.id]"
-                            placeholder="Add your notes here..."></textarea>
-                    </mat-form-field>
+            @if (pendingTrips.length === 0) {
+            <div class="bg-white rounded-2xl shadow-sm p-12 text-center backdrop-blur-lg bg-opacity-90">
+                <div class="flex flex-col items-center gap-4">
+                    <mat-icon class="!w-16 !h-16 !text-6xl text-gray-400">task_alt</mat-icon>
+                    <h3 class="text-xl font-medium text-gray-900">No Pending Approvals</h3>
+                    <p class="text-gray-600">All travel requests have been processed</p>
                 </div>
-
-                <div class="flex gap-4 mt-4">
-                    <button mat-raised-button color="primary" (click)="approveTrip(trip.id)"
-                        class="!bg-green-600 hover:!bg-green-700">
-                        <mat-icon>check</mat-icon>
-                        Approve
-                    </button>
-
-                    <button mat-raised-button color="warn" (click)="cancelTrip(trip.id)"
-                        class="!bg-red-600 hover:!bg-red-700">
-                        <mat-icon>close</mat-icon>
-                        Cancel
-                    </button>
-                </div>
-            </mat-card-content>
-        </mat-card>
-        }
-
-        @if (pendingTrips.length === 0) {
-        <div class="text-center py-8 text-gray-500">
-            No trips pending approval
+            </div>
+            }
         </div>
-        }
     </div>
 </div>

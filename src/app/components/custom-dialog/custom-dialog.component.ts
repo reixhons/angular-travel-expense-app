@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { TripService } from '../../services/trip.service';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { CarRentalExpense, Expense, ExpenseType, FlightExpense, HotelExpense, TaxiExpense, Trip, TripStatus } from '../../models/trip.model';
 import { AuthService } from '../../services/auth.service';
@@ -14,6 +15,7 @@ import { AuthService } from '../../services/auth.service';
     CommonModule,
     MatDialogModule,
     MatButtonModule,
+    MatIconModule,
     FormsModule
   ],
   templateUrl: './custom-dialog.component.html',

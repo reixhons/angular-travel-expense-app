@@ -1,12 +1,15 @@
-<div class="min-h-screen bg-gray-50 py-8">
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-12">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-white rounded-2xl shadow-sm p-8">
+        <div class="bg-white rounded-2xl shadow-lg p-8 backdrop-blur-lg bg-opacity-90">
             <!-- Trip Header Section -->
             <div class="mb-8">
-                <div class="flex justify-between items-center">
-                    <h1 class="text-3xl font-bold text-gray-900 mb-6">{{ trip?.name }}</h1>
-                    <div class="flex items-center z-10 gap-3 mb-6">
-                        <mat-form-field appearance="fill" class="w-40">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-8">
+                    <h1
+                        class="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-blue-500 bg-clip-text text-transparent">
+                        {{ trip?.name }}
+                    </h1>
+                    <div class="flex items-center gap-3">
+                        <mat-form-field appearance="fill" class="!w-40">
                             <mat-label>Expense Type</mat-label>
                             <mat-select [(ngModel)]="selectedExpenseType">
                                 <mat-option value="" disabled>Expense Type</mat-option>
@@ -16,44 +19,80 @@
                                 <mat-option value="TAXI">Taxi</mat-option>
                             </mat-select>
                         </mat-form-field>
-                        <button mat-raised-button color="primary"
-                            class="!rounded-xl !px-6 !py-2 !shadow-md hover:!shadow-lg transition-shadow"
+                        <button mat-raised-button
+                            class="!rounded-xl !px-6 !py-2.5 !bg-gradient-to-r !from-indigo-600 !to-blue-500 !shadow-lg hover:!shadow-xl !border-0 transition-all duration-200"
                             [disabled]="!selectedExpenseType || trip?.status !== 'DRAFT'" (click)="addNewExpense()">
-                            <mat-icon>add</mat-icon>
+                            <mat-icon class="mr-2">add</mat-icon>
                             New Expense
                         </button>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div class="bg-gray-50 rounded-xl p-4 flex items-center gap-3">
-                        <mat-icon class="text-gray-500">calendar_today</mat-icon>
-                        <span class="text-gray-700">{{ getTripDuration(trip?.startDate, trip?.endDate) }} days</span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div
+                        class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-200 border border-gray-100">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center">
+                                <mat-icon class="text-indigo-600">calendar_today</mat-icon>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">Duration</p>
+                                <p class="text-lg font-semibold text-gray-900">{{ getTripDuration(trip?.startDate,
+                                    trip?.endDate) }} days</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="bg-gray-50 rounded-xl p-4 flex items-center gap-3">
-                        <mat-icon class="text-gray-500">event</mat-icon>
-                        <span class="text-gray-700">{{ trip?.startDate | date }} - {{ trip?.endDate | date }}</span>
+                    <div
+                        class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-200 border border-gray-100">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
+                                <mat-icon class="text-blue-600">event</mat-icon>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">Date Range</p>
+                                <p class="text-lg font-semibold text-gray-900">{{ trip?.startDate | date:'shortDate' }}
+                                    - {{ trip?.endDate | date:'shortDate' }}</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="bg-gray-50 rounded-xl p-4 flex items-center gap-3">
-                        <mat-icon class="text-gray-500">receipt_long</mat-icon>
-                        <span class="text-gray-700">{{ expenses.length }} Expenses</span>
+                    <div
+                        class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-200 border border-gray-100">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center">
+                                <mat-icon class="text-purple-600">receipt_long</mat-icon>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">Total Expenses</p>
+                                <p class="text-lg font-semibold text-gray-900">{{ expenses.length }} Items</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="bg-gray-50 rounded-xl p-4 flex items-center gap-3">
-                        <mat-icon class="text-gray-500">attach_money</mat-icon>
-                        <span class="text-gray-700">{{ getTotalCost() | currency }}</span>
+                    <div
+                        class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-200 border border-gray-100">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                                <mat-icon class="text-green-600">attach_money</mat-icon>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500">Total Cost</p>
+                                <p class="text-lg font-semibold text-gray-900">{{ getTotalCost() | currency }}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Trip Details Section -->
-            <div class="mb-8 bg-white rounded-xl border border-gray-200 p-6">
-                <h2 class="text-xl font-semibold text-gray-900 mb-4">Trip Details</h2>
+            <div class="mb-8 bg-white rounded-xl shadow-md p-6 border border-gray-100">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Trip Details</h2>
                 <div class="flex flex-col gap-4">
                     <div class="flex items-center gap-4">
                         <strong class="text-gray-700">Status:</strong>
                         @if (trip?.status === 'DRAFT') {
-                        <button mat-raised-button color="primary" class="!rounded-xl" (click)="updateTripStatus()">
-                            <mat-icon>send</mat-icon>
+                        <button mat-raised-button
+                            class="!rounded-xl !px-6 !py-2 !bg-gradient-to-r !from-indigo-600 !to-blue-500 !shadow-md hover:!shadow-lg transition-all duration-200"
+                            (click)="updateTripStatus()">
+                            <mat-icon class="mr-2">send</mat-icon>
                             Send for Approval
                         </button>
                         } @else {
@@ -63,128 +102,143 @@
                         }
                     </div>
                     @if (trip?.approverNote) {
-                    <div class="bg-blue-50 rounded-lg p-4">
-                        <strong class="text-blue-700">Approver Note:</strong>
-                        <p class="mt-1 text-blue-600">{{ trip?.approverNote }}</p>
+                    <div class="bg-blue-50 rounded-xl p-6 border border-blue-100">
+                        <div class="flex items-start gap-3">
+                            <mat-icon class="text-blue-600">info</mat-icon>
+                            <div>
+                                <strong class="text-blue-700 block mb-1">Approver Note</strong>
+                                <p class="text-blue-600">{{ trip?.approverNote }}</p>
+                            </div>
+                        </div>
                     </div>
                     }
                 </div>
             </div>
 
             <!-- Expenses Section -->
-            <div class="mb-8">
-                <h2 class="text-xl font-semibold text-gray-900 mb-4">Expenses</h2>
-                <div class="space-y-4">
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Expenses</h2>
+                <div class="space-y-6">
                     @for (expense of expenses; track expense.id) {
-                    <div class="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-md transition-shadow">
-                        <div class="flex justify-between items-start">
-                            <div class="space-y-4 w-full">
-                                <!-- Common Fields -->
-                                <div class="flex items-center gap-2">
-                                    <span class="text-sm font-medium text-gray-500">Type:</span>
-                                    <span class="text-gray-900">{{ expense.type }}</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <span class="text-sm font-medium text-gray-500">Amount:</span>
-                                    <span class="text-gray-900">{{ expense.totalPrice | currency }}</span>
-                                </div>
+                    <div
+                        class="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-200 border border-gray-100 overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start">
+                                <div class="space-y-6 w-full">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-4">
+                                            <div
+                                                class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center">
+                                                <mat-icon class="text-indigo-600">
+                                                    {{
+                                                    expense.type === 'FLIGHT' ? 'flight' :
+                                                    expense.type === 'HOTEL' ? 'hotel' :
+                                                    expense.type === 'CAR_RENTAL' ? 'directions_car' :
+                                                    'local_taxi'
+                                                    }}
+                                                </mat-icon>
+                                            </div>
+                                            <div>
+                                                <h3 class="text-xl font-semibold text-gray-900">{{ expense.type }}</h3>
+                                                <p class="text-green-600 font-medium">{{ expense.totalPrice | currency
+                                                    }}</p>
+                                            </div>
+                                        </div>
+                                        <button mat-icon-button (click)="editExpense(expense)"
+                                            class="!rounded-full hover:!bg-gray-100 !transition-all !duration-200">
+                                            <mat-icon class="text-gray-600">edit</mat-icon>
+                                        </button>
+                                    </div>
 
-                                <!-- Flight Specific Fields -->
-                                @if (expense.type === 'FLIGHT') {
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-gray-100 pt-4">
-                                    <div>
-                                        <span class="text-sm font-medium text-gray-500">Airline:</span>
-                                        <span class="text-gray-900 ml-2">{{ expense.airline }}</span>
+                                    <!-- Flight Details -->
+                                    @if (expense.type === 'FLIGHT') {
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-gray-100">
+                                        <div class="space-y-2">
+                                            <p class="text-sm font-medium text-gray-500">Airline</p>
+                                            <p class="text-gray-900">{{ expense.airline }}</p>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <p class="text-sm font-medium text-gray-500">Route</p>
+                                            <p class="text-gray-900">{{ expense.from }} → {{ expense.to }}</p>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <p class="text-sm font-medium text-gray-500">Departure</p>
+                                            <p class="text-gray-900">{{ expense.departureDateTime | date:'medium' }}</p>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <p class="text-sm font-medium text-gray-500">Arrival</p>
+                                            <p class="text-gray-900">{{ expense.arrivalDateTime | date:'medium' }}</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <span class="text-sm font-medium text-gray-500">Route:</span>
-                                        <span class="text-gray-900 ml-2">{{ expense.from }} → {{ expense.to }}</span>
-                                    </div>
-                                    <div>
-                                        <span class="text-sm font-medium text-gray-500">Departure:</span>
-                                        <span class="text-gray-900 ml-2">{{ expense.departureDateTime | date:'medium'
-                                            }}</span>
-                                    </div>
-                                    <div>
-                                        <span class="text-sm font-medium text-gray-500">Arrival:</span>
-                                        <span class="text-gray-900 ml-2">{{ expense.arrivalDateTime | date:'medium'
-                                            }}</span>
-                                    </div>
-                                </div>
-                                }
+                                    }
 
-                                <!-- Hotel Specific Fields -->
-                                @if (expense.type === 'HOTEL') {
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-gray-100 pt-4">
-                                    <div>
-                                        <span class="text-sm font-medium text-gray-500">Hotel:</span>
-                                        <span class="text-gray-900 ml-2">{{ expense.hotelName }}</span>
+                                    <!-- Hotel Details -->
+                                    @if (expense.type === 'HOTEL') {
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-gray-100">
+                                        <div class="space-y-2">
+                                            <p class="text-sm font-medium text-gray-500">Hotel</p>
+                                            <p class="text-gray-900">{{ expense.hotelName }}</p>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <p class="text-sm font-medium text-gray-500">Location</p>
+                                            <p class="text-gray-900">{{ expense.location }}</p>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <p class="text-sm font-medium text-gray-500">Check-in</p>
+                                            <p class="text-gray-900">{{ expense.checkInDate | date }}</p>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <p class="text-sm font-medium text-gray-500">Check-out</p>
+                                            <p class="text-gray-900">{{ expense.checkOutDate | date }}</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <span class="text-sm font-medium text-gray-500">Location:</span>
-                                        <span class="text-gray-900 ml-2">{{ expense.location }}</span>
-                                    </div>
-                                    <div>
-                                        <span class="text-sm font-medium text-gray-500">Check-in:</span>
-                                        <span class="text-gray-900 ml-2">{{ expense.checkInDate | date }}</span>
-                                    </div>
-                                    <div>
-                                        <span class="text-sm font-medium text-gray-500">Check-out:</span>
-                                        <span class="text-gray-900 ml-2">{{ expense.checkOutDate | date }}</span>
-                                    </div>
-                                </div>
-                                }
+                                    }
 
-                                <!-- Car Rental Specific Fields -->
-                                @if (expense.type === 'CAR_RENTAL') {
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-gray-100 pt-4">
-                                    <div>
-                                        <span class="text-sm font-medium text-gray-500">Vehicle:</span>
-                                        <span class="text-gray-900 ml-2">{{ expense.carName }}</span>
+                                    <!-- Car Rental Details -->
+                                    @if (expense.type === 'CAR_RENTAL') {
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-gray-100">
+                                        <div class="space-y-2">
+                                            <p class="text-sm font-medium text-gray-500">Vehicle</p>
+                                            <p class="text-gray-900">{{ expense.carName }}</p>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <p class="text-sm font-medium text-gray-500">Pickup Location</p>
+                                            <p class="text-gray-900">{{ expense.pickupLocation }}</p>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <p class="text-sm font-medium text-gray-500">Pickup Time</p>
+                                            <p class="text-gray-900">{{ expense.pickupDateTime | date:'medium' }}</p>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <p class="text-sm font-medium text-gray-500">Dropoff Location</p>
+                                            <p class="text-gray-900">{{ expense.dropoffLocation }}</p>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <p class="text-sm font-medium text-gray-500">Dropoff Time</p>
+                                            <p class="text-gray-900">{{ expense.dropoffDateTime | date:'medium' }}</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <span class="text-sm font-medium text-gray-500">Pickup Location:</span>
-                                        <span class="text-gray-900 ml-2">{{ expense.pickupLocation }}</span>
-                                    </div>
-                                    <div>
-                                        <span class="text-sm font-medium text-gray-500">Pickup Time:</span>
-                                        <span class="text-gray-900 ml-2">{{ expense.pickupDateTime | date:'medium'
-                                            }}</span>
-                                    </div>
-                                    <div>
-                                        <span class="text-sm font-medium text-gray-500">Dropoff Location:</span>
-                                        <span class="text-gray-900 ml-2">{{ expense.dropoffLocation }}</span>
-                                    </div>
-                                    <div>
-                                        <span class="text-sm font-medium text-gray-500">Dropoff Time:</span>
-                                        <span class="text-gray-900 ml-2">{{ expense.dropoffDateTime | date:'medium'
-                                            }}</span>
-                                    </div>
-                                </div>
-                                }
+                                    }
 
-                                <!-- Taxi Specific Fields -->
-                                @if (expense.type === 'TAXI') {
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-gray-100 pt-4">
-                                    <div>
-                                        <span class="text-sm font-medium text-gray-500">From:</span>
-                                        <span class="text-gray-900 ml-2">{{ expense.from }}</span>
+                                    <!-- Taxi Details -->
+                                    @if (expense.type === 'TAXI') {
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-gray-100">
+                                        <div class="space-y-2">
+                                            <p class="text-sm font-medium text-gray-500">From</p>
+                                            <p class="text-gray-900">{{ expense.from }}</p>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <p class="text-sm font-medium text-gray-500">To</p>
+                                            <p class="text-gray-900">{{ expense.to }}</p>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <p class="text-sm font-medium text-gray-500">Date & Time</p>
+                                            <p class="text-gray-900">{{ expense.dateTime | date:'medium' }}</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <span class="text-sm font-medium text-gray-500">To:</span>
-                                        <span class="text-gray-900 ml-2">{{ expense.to }}</span>
-                                    </div>
-                                    <div>
-                                        <span class="text-sm font-medium text-gray-500">Date & Time:</span>
-                                        <span class="text-gray-900 ml-2">{{ expense.dateTime | date:'medium' }}</span>
-                                    </div>
+                                    }
                                 </div>
-                                }
                             </div>
-                            <button mat-icon-button color="primary" (click)="editExpense(expense)"
-                                class="!rounded-full hover:bg-gray-100">
-                                <mat-icon>edit</mat-icon>
-                            </button>
                         </div>
                     </div>
                     }
