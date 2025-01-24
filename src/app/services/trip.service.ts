@@ -1,3 +1,4 @@
+import { Expense, TripStatus } from './../models/trip.model';
 import { Injectable, computed, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, finalize, tap, throwError } from 'rxjs';
@@ -77,5 +78,119 @@ export class TripService {
 
   getTripExpenses(tripId: string): number {
     return this.expensesMap()?.get(tripId) || 0;
+  }
+
+  updateTripStatus(tripId: string, status: TripStatus): Observable<Trip> {
+    const updatedFields = { status };
+
+    return this.http.patch<Trip>(`${this.apiUrl}/trips/${tripId}`, updatedFields).pipe(
+      catchError(error => {
+        console.error('Failed to update trip status:', error);
+        return throwError(() => error);
+      }),
+      tap(updatedTrip => {
+        if (updatedTrip) {
+          const trips = this.trips().map(trip =>
+            trip.id === tripId ? { ...trip, status: updatedTrip.status } : trip
+          );
+          this.tripsSignal.set(trips);
+        }
+      })
+    );
+  }
+
+  getTrip(tripId: string): Observable<Trip> {
+    this.isLoadingSignal.set(true);
+    this.errorSignal.set(null);
+
+    return this.http.get<Trip>(`${this.apiUrl}/trips/${tripId}`).pipe(
+      catchError(error => {
+        this.errorSignal.set('Failed to load trip details');
+        return throwError(() => error);
+      }),
+      finalize(() => this.isLoadingSignal.set(false))
+    );
+  }
+
+  getTripExpensesDetails(tripId: string): Observable<any[]> {
+    this.isLoadingSignal.set(true);
+    this.errorSignal.set(null);
+
+    return this.http.get<any[]>(`${this.apiUrl}/expenses?tripId=${tripId}`).pipe(
+      catchError(error => {
+        this.errorSignal.set('Failed to load trip expenses');
+        return throwError(() => error);
+      }),
+      finalize(() => this.isLoadingSignal.set(false))
+    );
+  }
+
+  sendTripForApproval(tripId: string): Observable<Trip> {
+    this.isLoadingSignal.set(true);
+    this.errorSignal.set(null);
+
+    return this.http.patch<Trip>(`${this.apiUrl}/trips/${tripId}`, {
+      status: TripStatus.PENDING_APPROVAL
+    }).pipe(
+      tap(updatedTrip => {
+        this.tripsSignal.update(trips =>
+          trips.map(t => t.id === tripId ? updatedTrip : t)
+        );
+      }),
+      catchError(error => {
+        this.errorSignal.set('Failed to send trip for approval');
+        return throwError(() => error);
+      }),
+      finalize(() => this.isLoadingSignal.set(false))
+    );
+  }
+
+  getExpenseById(expenseId: string): Observable<Expense> {
+    this.isLoadingSignal.set(true);
+    this.errorSignal.set(null);
+
+    return this.http.get<Expense>(`${this.apiUrl}/expenses/${expenseId}`).pipe(
+      catchError(error => {
+        this.errorSignal.set('Failed to load expense');
+        return throwError(() => error);
+      }),
+      finalize(() => this.isLoadingSignal.set(false))
+    );
+  }
+
+  createExpense(expenseData: any): Observable<Expense> {
+    this.isLoadingSignal.set(true);
+    this.errorSignal.set(null);
+
+    return this.http.post<Expense>(`${this.apiUrl}/expenses`, expenseData).pipe(
+      tap(newExpense => {
+        this.expensesMap.update(map => {
+          const currentTotal = map.get(newExpense.tripId) || 0;
+          map.set(newExpense.tripId, currentTotal + newExpense.totalPrice);
+          return map;
+        });
+      }),
+      catchError(error => {
+        this.errorSignal.set('Failed to create expense');
+        return throwError(() => error);
+      }),
+      finalize(() => this.isLoadingSignal.set(false))
+    );
+  }
+
+  updateExpense(expenseId: string, expenseData: any): Observable<Expense> {
+    this.isLoadingSignal.set(true);
+    this.errorSignal.set(null);
+
+    return this.http.patch<Expense>(`${this.apiUrl}/expenses/${expenseId}`, expenseData).pipe(
+      tap(updatedExpense => {
+        this.loadTripExpenses(updatedExpense.tripId);
+      }),
+      catchError(error => {
+        this.errorSignal.set('Failed to update expense');
+        return throwError(() => error);
+      }),
+      finalize(() => this.isLoadingSignal.set(false))
+    );
   }
 }

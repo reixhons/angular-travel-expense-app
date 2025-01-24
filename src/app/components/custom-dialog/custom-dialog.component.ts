@@ -4,10 +4,12 @@ import { TripService } from '../../services/trip.service';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
-import { Trip } from '../../models/trip.model';
+import { CarRentalExpense, Expense, ExpenseType, FlightExpense, HotelExpense, TaxiExpense, Trip, TripStatus } from '../../models/trip.model';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-custom-dialog',
+  standalone: true,
   imports: [
     CommonModule,
     MatDialogModule,
@@ -19,16 +21,101 @@ import { Trip } from '../../models/trip.model';
 })
 
 export class CustomDialogComponent {
+
   tripName: string = '';
+  duration: number = 0;
+  expenseTotalPrice: number = 0;
+  type: string = '';
+
   startDate: Date = new Date();
   endDate: Date = new Date();
-  duration: number = 0;
+  name: string = ''
+
+  // Flight specific fields
+  airline: string = '';
+  from: string = '';
+  to: string = '';
+  departureDateTime: Date = new Date();
+  arrivalDateTime: Date = new Date();
+
+  // Hotel specific fields
+  hotelName: string = '';
+  location: string = '';
+  checkInDate: Date = new Date();
+  checkOutDate: Date = new Date();
+
+  // Car Rental specific fields
+  carName: string = '';
+  pickupDateTime: Date = new Date();
+  dropoffDateTime: Date = new Date();
+  pickupLocation: string = '';
+  dropoffLocation: string = '';
+
+  // Taxi specific fields
+  dateTime: Date = new Date();
 
   constructor(
+
     public dialogRef: MatDialogRef<CustomDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { message: string },
-    private tripService: TripService
-  ) { }
+    @Inject(MAT_DIALOG_DATA) public data: {
+      dataType: 'Trip' | 'Expense';
+      event: 'New' | 'Edit' | 'View';
+      expenseId?: string;
+      type?: string;
+      tripId?: string;
+    },
+
+    private tripService: TripService,
+    private authService: AuthService
+  ) {
+    if (data.type !== undefined) {
+      this.type = data.type;
+    }
+
+    if (data.expenseId) {
+      this.tripService.getExpenseById(data.expenseId).subscribe({
+        next: (expense: Expense) => {
+          this.expenseTotalPrice = expense.totalPrice;
+
+          switch (expense.type) {
+            case ExpenseType.FLIGHT:
+              const flightExpense = expense as FlightExpense;
+              this.airline = flightExpense.airline;
+              this.from = flightExpense.from;
+              this.to = flightExpense.to;
+              this.departureDateTime = new Date(flightExpense.departureDateTime);
+              this.arrivalDateTime = new Date(flightExpense.arrivalDateTime);
+              break;
+
+            case ExpenseType.HOTEL:
+              const hotelExpense = expense as HotelExpense;
+              this.hotelName = hotelExpense.hotelName;
+              this.location = hotelExpense.location;
+              this.checkInDate = new Date(hotelExpense.checkInDate);
+              this.checkOutDate = new Date(hotelExpense.checkOutDate);
+              break;
+
+            case ExpenseType.CAR_RENTAL:
+              const carRentalExpense = expense as CarRentalExpense;
+              this.carName = carRentalExpense.carName;
+              this.pickupDateTime = new Date(carRentalExpense.pickupDateTime);
+              this.dropoffDateTime = new Date(carRentalExpense.dropoffDateTime);
+              this.pickupLocation = carRentalExpense.pickupLocation;
+              this.dropoffLocation = carRentalExpense.dropoffLocation;
+              break;
+
+            case ExpenseType.TAXI:
+              const taxiExpense = expense as TaxiExpense;
+              this.from = taxiExpense.from;
+              this.to = taxiExpense.to;
+              this.dateTime = new Date(taxiExpense.dateTime);
+              break;
+          }
+        },
+        error: (err) => console.error('Failed to load expense:', err)
+      });
+    }
+  }
 
   closeDialog(): void {
     this.dialogRef.close();
@@ -43,11 +130,14 @@ export class CustomDialogComponent {
   }
 
   saveTrip(): void {
+    const currentUser = this.authService.getCurrentUser();
+
     const tripData = {
       name: this.tripName,
       startDate: this.startDate,
       endDate: this.endDate,
-      userId: '101' // Replace with the actual user ID or dynamically fetch
+      userId: currentUser ? currentUser.id : 'unknown',
+      status: TripStatus.DRAFT
     };
 
     this.tripService.createTrip(tripData as Partial<Trip>).subscribe({
@@ -55,4 +145,88 @@ export class CustomDialogComponent {
       error: (err) => console.error(err)
     });
   }
+
+  saveExpense(): void {
+    if (!this.data.expenseId) {
+      // Create new expense
+      const expenseData = {
+        type: this.data.type,
+        totalPrice: this.expenseTotalPrice,
+        tripId: this.data.tripId,
+
+        // Add type-specific fields
+        ...(this.data.type === ExpenseType.FLIGHT && {
+          airline: this.airline,
+          from: this.from,
+          to: this.to,
+          departureDateTime: this.departureDateTime,
+          arrivalDateTime: this.arrivalDateTime
+        }),
+        ...(this.data.type === ExpenseType.HOTEL && {
+          hotelName: this.hotelName,
+          location: this.location,
+          checkInDate: this.checkInDate,
+          checkOutDate: this.checkOutDate
+        }),
+        ...(this.data.type === ExpenseType.CAR_RENTAL && {
+          carName: this.carName,
+          pickupDateTime: this.pickupDateTime,
+          dropoffDateTime: this.dropoffDateTime
+        }),
+        ...(this.data.type === ExpenseType.TAXI && {
+          type: this.type,
+          from: this.from,
+          to: this.to,
+          dateTime: this.dateTime
+        })
+      };
+
+      this.tripService.createExpense(expenseData).subscribe({
+        next: () => this.dialogRef.close(true),
+        error: (err) => console.error('Failed to create expense:', err)
+      });
+    } else {
+      this.tripService.getExpenseById(this.data.expenseId).subscribe({
+        next: (expense: Expense) => {
+          const updatedExpense = {
+            ...expense,
+            totalPrice: this.expenseTotalPrice,
+            tripId: this.data.tripId,
+
+            ...(expense.type === ExpenseType.FLIGHT && {
+              airline: this.airline,
+              from: this.from,
+              to: this.to,
+              departureDateTime: this.departureDateTime,
+              arrivalDateTime: this.arrivalDateTime
+            }),
+            ...(expense.type === ExpenseType.HOTEL && {
+              hotelName: this.hotelName,
+              location: this.location,
+              checkInDate: this.checkInDate,
+              checkOutDate: this.checkOutDate
+            }),
+            ...(expense.type === ExpenseType.CAR_RENTAL && {
+              carName: this.carName,
+              pickupDateTime: this.pickupDateTime,
+              dropoffDateTime: this.dropoffDateTime
+            }),
+            ...(expense.type === ExpenseType.TAXI && {
+              type: this.type,
+              from: this.from,
+              to: this.to,
+              dateTime: this.dateTime
+            })
+          };
+
+          this.tripService.updateExpense(this.data.expenseId!, updatedExpense).subscribe({
+            next: () => this.dialogRef.close(true),
+            error: (err) => console.error('Failed to update expense:', err)
+          });
+        },
+        error: (err) => console.error('Failed to load expense:', err)
+      });
+    }
+  }
+
 }

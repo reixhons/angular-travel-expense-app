@@ -7,9 +7,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TripService } from '../../services/trip.service';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Signal } from '@angular/core';
-import { Trip } from '../../models/trip.model';
+import { Trip, TripStatus } from '../../models/trip.model';
 import { CustomDialogComponent } from '../../components/custom-dialog/custom-dialog.component';
 
 
@@ -23,7 +23,7 @@ import { CustomDialogComponent } from '../../components/custom-dialog/custom-dia
     MatCardModule,
     MatIconModule,
     MatProgressSpinnerModule,
-
+    RouterModule
   ],
   templateUrl: './trips.component.html'
 })
@@ -49,12 +49,24 @@ export class TripsComponent implements OnInit {
   openCustomDialog() {
     this.dialog.open(CustomDialogComponent, {
       width: '400px',
-      data: { message: 'newTrip' }
+      data: { dataType: "Trip", event: 'New', isEditable: true }
     });
   }
 
   ngOnInit(): void {
     this.tripService.loadTrips();
+  }
+
+
+  sendForApproval(trip: Trip) {
+    this.tripService.updateTripStatus(trip.id, TripStatus.PENDING_APPROVAL).subscribe({
+      next: () => {
+        // Success notification could be added here
+      },
+      error: (error) => {
+        console.error('Error sending trip for approval:', error);
+      }
+    });
   }
 
 
@@ -70,6 +82,34 @@ export class TripsComponent implements OnInit {
     this.authService.logout().subscribe({
       next: () => this.router.navigate(['/login']),
       error: () => { } // Error handling is done in service
+    });
+  }
+
+  getStatusClass(status: string): string {
+    switch (status) {
+      case TripStatus.PENDING_APPROVAL:
+        return 'status-pending';
+      case TripStatus.APPROVED:
+        return 'status-approved';
+      case TripStatus.CANCELLED:
+        return 'status-cancelled';
+      case TripStatus.IN_PROCESS:
+        return 'status-in-process';
+      case TripStatus.REFUNDED:
+        return 'status-refunded';
+      default:
+        return 'status-draft';
+    }
+  }
+
+  updateTripStatus(trip: Trip) {
+    this.tripService.updateTripStatus(trip.id, TripStatus.PENDING_APPROVAL).subscribe({
+      next: () => {
+        // Success notification could be added here
+      },
+      error: (error) => {
+        console.error('Error updating trip status:', error);
+      }
     });
   }
 }

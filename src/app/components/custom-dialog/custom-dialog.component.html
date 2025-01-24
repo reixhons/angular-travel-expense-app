@@ -1,39 +1,146 @@
-<h1 mat-dialog-title>Custom Dialog</h1>
+<h1 mat-dialog-title> {{ data.event }} {{data.dataType}}</h1>
+
 <div mat-dialog-content>
-    <ng-container [ngSwitch]="data.message">
-        <div *ngSwitchCase="'newTrip'" class="p-4">
-            <form (ngSubmit)="saveTrip()">
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700">Trip Name</label>
-                    <input [(ngModel)]="tripName" name="tripName" required
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700">Start Date</label>
-                    <input type="date" [(ngModel)]="startDate" name="startDate" (change)="updateEndDate()" required
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700">End Date</label>
-                    <input type="date" [(ngModel)]="endDate" name="endDate" required
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700">Trip Duration (days)</label>
-                    <input type="number" [(ngModel)]="duration" name="duration" (input)="updateEndDate()" required
-                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-                </div>
-                <button type="submit"
-                    class="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Save
-                </button>
-            </form>
+    @if (data.dataType === 'Trip') {
+    <form (ngSubmit)="saveTrip()">
+        <!-- Common field for all expense types -->
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Trip Name</label>
+            <input type="text" [(ngModel)]="tripName" name="tripName" required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
         </div>
-        <div *ngSwitchDefault>
-            <p>{{ data.message }}</p>
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Start Date</label>
+            <input type="date" [(ngModel)]="startDate" name="startDate" required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
         </div>
-    </ng-container>
-</div>
-<div mat-dialog-actions>
-    <button mat-button (click)="closeDialog()">Close</button>
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">End Date</label>
+            <input type="date" [(ngModel)]="endDate" name="endDate" required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        </div>
+
+        <div class="flex justify-end gap-2">
+            <button mat-button type="button" (click)="dialogRef.close()">Cancel</button>
+            <button mat-raised-button color="primary" type="submit">Save</button>
+        </div>
+    </form>
+    }@else {
+    <form (ngSubmit)="saveExpense()">
+        <!-- Common field for all expense types -->
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Total Price</label>
+            <input type="number" [(ngModel)]="expenseTotalPrice" name="expenseTotalPrice" required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        </div>
+
+        <!-- Flight specific fields -->
+        @if (data.type === 'FLIGHT') {
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Airline</label>
+            <input type="text" [(ngModel)]="airline" name="airline" required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        </div>
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">From</label>
+            <input type="text" [(ngModel)]="from" name="from" required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        </div>
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">To</label>
+            <input type="text" [(ngModel)]="to" name="to" required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        </div>
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Departure Date & Time</label>
+            <input type="datetime-local" [(ngModel)]="departureDateTime" name="departureDateTime" required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        </div>
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Arrival Date & Time</label>
+            <input type="datetime-local" [(ngModel)]="arrivalDateTime" name="arrivalDateTime" required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        </div>
+        }
+
+        <!-- Hotel specific fields -->
+        @if (data.type === 'HOTEL') {
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Hotel Name</label>
+            <input type="text" [(ngModel)]="hotelName" name="hotelName" required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        </div>
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Location</label>
+            <input type="text" [(ngModel)]="location" name="location" required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        </div>
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Check In Date</label>
+            <input type="date" [(ngModel)]="checkInDate" name="checkInDate" required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        </div>
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Check Out Date</label>
+            <input type="date" [(ngModel)]="checkOutDate" name="checkOutDate" required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        </div>
+        }
+
+        <!-- Car Rental specific fields -->
+        @if (data.type === 'CAR_RENTAL') {
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Car Name</label>
+            <input type="text" [(ngModel)]="carName" name="carName" required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        </div>
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Pickup Date & Time</label>
+            <input type="datetime-local" [(ngModel)]="pickupDateTime" name="pickupDateTime" required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        </div>
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Dropoff Date & Time</label>
+            <input type="datetime-local" [(ngModel)]="dropoffDateTime" name="dropoffDateTime" required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        </div>
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Pickup Location</label>
+            <input type="text" [(ngModel)]="pickupLocation" name="pickupLocation" required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        </div>
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Dropoff Location</label>
+            <input type="text" [(ngModel)]="dropoffLocation" name="dropoffLocation" required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        </div>
+        }
+
+        <!-- Taxi specific fields -->
+        @if (data.type === 'TAXI') {
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">From</label>
+            <input type="text" [(ngModel)]="from" name="from" required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        </div>
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">To</label>
+            <input type="text" [(ngModel)]="to" name="to" required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        </div>
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Date & Time</label>
+            <input type="datetime-local" [(ngModel)]="dateTime" name="dateTime" required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        </div>
+        }
+
+        <div class="flex justify-end gap-2">
+            <button mat-button type="button" (click)="dialogRef.close()">Cancel</button>
+            <button mat-raised-button color="primary" type="submit">Save</button>
+        </div>
+    </form>
+    }
+
+
 </div>
