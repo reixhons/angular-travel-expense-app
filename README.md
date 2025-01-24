@@ -1,5 +1,20 @@
 # TravelExpenseTracker
 
+Users for testing:
+User END_USER
+email: user@example.com
+password: 123
+
+User APPROVER
+email: approver@example.com
+password: 123
+
+User FINANCE
+email: finance@example.com
+password: 123
+
+// npm run mock to start the mock server (json-server)
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.3.
 
 ## Development server

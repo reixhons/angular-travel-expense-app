@@ -56,6 +56,11 @@ export class CustomDialogComponent {
   // Taxi specific fields
   dateTime: Date = new Date();
 
+  // Add these properties
+  today: string = new Date().toISOString().split('T')[0];
+  isValid: boolean = true;
+  errorMessage: string = '';
+
   constructor(
 
     public dialogRef: MatDialogRef<CustomDialogComponent>,
@@ -131,7 +136,49 @@ export class CustomDialogComponent {
     }
   }
 
+  validateDates(): void {
+    if (this.data.dataType === 'Trip') {
+      if (new Date(this.endDate) < new Date(this.startDate)) {
+        this.endDate = this.startDate;
+        this.errorMessage = 'End date cannot be before start date';
+        this.isValid = false;
+      } else {
+        this.errorMessage = '';
+        this.isValid = true;
+      }
+    } else if (this.data.type === ExpenseType.FLIGHT) {
+      if (new Date(this.arrivalDateTime) < new Date(this.departureDateTime)) {
+        this.arrivalDateTime = this.departureDateTime;
+        this.errorMessage = 'Arrival time cannot be before departure time';
+        this.isValid = false;
+      } else {
+        this.errorMessage = '';
+        this.isValid = true;
+      }
+    } else if (this.data.type === ExpenseType.HOTEL) {
+      if (new Date(this.checkOutDate) < new Date(this.checkInDate)) {
+        this.checkOutDate = this.checkInDate;
+        this.errorMessage = 'Check-out date cannot be before check-in date';
+        this.isValid = false;
+      } else {
+        this.errorMessage = '';
+        this.isValid = true;
+      }
+    } else if (this.data.type === ExpenseType.CAR_RENTAL) {
+      if (new Date(this.dropoffDateTime) < new Date(this.pickupDateTime)) {
+        this.dropoffDateTime = this.pickupDateTime;
+        this.errorMessage = 'Drop-off time cannot be before pickup time';
+        this.isValid = false;
+      } else {
+        this.errorMessage = '';
+        this.isValid = true;
+      }
+    }
+  }
+
   saveTrip(): void {
+    if (!this.isValid) return;
+
     const currentUser = this.authService.getCurrentUser();
 
     const tripData = {
@@ -149,6 +196,8 @@ export class CustomDialogComponent {
   }
 
   saveExpense(): void {
+    if (!this.isValid) return;
+
     if (!this.data.expenseId) {
       // Create new expense
       const expenseData = {
