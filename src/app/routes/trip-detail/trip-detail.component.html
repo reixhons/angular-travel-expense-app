@@ -9,19 +9,22 @@
                         {{ trip?.name }}
                     </h1>
                     <div class="flex items-center gap-3">
-                        <mat-form-field appearance="fill" class="!w-40">
-                            <mat-label>Expense Type</mat-label>
-                            <mat-select [(ngModel)]="selectedExpenseType">
+                        <mat-form-field appearance="fill"
+                            class="!bg-white !rounded-lg !shadow-sm !px-2 !backdrop-blur-none">
+                            <mat-label class="!text-gray-600">Expense Type</mat-label>
+                            <mat-select [(ngModel)]="selectedExpenseType" class="!bg-white !font-medium !text-gray-700">
                                 <mat-option value="" disabled>Expense Type</mat-option>
-                                <mat-option value="FLIGHT">Flight</mat-option>
-                                <mat-option value="HOTEL">Hotel</mat-option>
-                                <mat-option value="CAR_RENTAL">Car Rental</mat-option>
-                                <mat-option value="TAXI">Taxi</mat-option>
+                                <mat-option value="FLIGHT" class="!bg-white">Flight</mat-option>
+                                <mat-option value="HOTEL" class="!bg-white">Hotel</mat-option>
+                                <mat-option value="CAR_RENTAL" class="!bg-white">Car Rental</mat-option>
+                                <mat-option value="TAXI" class="!bg-white">Taxi</mat-option>
                             </mat-select>
                         </mat-form-field>
                         <button mat-raised-button
                             class="!rounded-xl !px-6 !py-2.5 !bg-gradient-to-r !from-indigo-600 !to-blue-500 !shadow-lg hover:!shadow-xl !border-0 transition-all duration-200"
-                            [disabled]="!selectedExpenseType || trip?.status !== 'DRAFT'" (click)="addNewExpense()">
+                            [disabled]="!selectedExpenseType || trip?.status !== 'DRAFT'"
+                            [ngClass]="{ 'opacity-50': !selectedExpenseType || trip?.status !== 'DRAFT' }"
+                            (click)="addNewExpense()">
                             <mat-icon class="mr-2">add</mat-icon>
                             New Expense
                         </button>
@@ -82,7 +85,6 @@
                 </div>
             </div>
 
-            <!-- Trip Details Section -->
             <div class="mb-8 bg-white rounded-xl shadow-md p-6 border border-gray-100">
                 <h2 class="text-2xl font-bold text-gray-900 mb-6">Trip Details</h2>
                 <div class="flex flex-col gap-4">
@@ -115,7 +117,6 @@
                 </div>
             </div>
 
-            <!-- Expenses Section -->
             <div>
                 <h2 class="text-2xl font-bold text-gray-900 mb-6">Expenses</h2>
                 <div class="space-y-6">
@@ -150,7 +151,6 @@
                                         </button>
                                     </div>
 
-                                    <!-- Flight Details -->
                                     @if (expense.type === 'FLIGHT') {
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-gray-100">
                                         <div class="space-y-2">

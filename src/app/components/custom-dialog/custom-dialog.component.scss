@@ -1,0 +1,29 @@
+.dialog-container {
+    @apply animate-[fadeIn_0.3s_ease-out];
+}
+
+.dialog-content {
+    @apply animate-[slideUp_0.3s_ease-out];
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

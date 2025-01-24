@@ -131,6 +131,38 @@
       "startDate": "2025-01-14",
       "endDate": "2025-01-24T10:20:53.555Z",
       "userId": "1",
+      "status": "PENDING_APPROVAL"
+    },
+    {
+      "id": "68ef",
+      "name": "tt",
+      "startDate": "2025-01-24T11:12:36.902Z",
+      "endDate": "2025-01-24T11:12:36.902Z",
+      "userId": "1",
+      "status": "CANCELLED"
+    },
+    {
+      "id": "a4d3",
+      "name": "kola",
+      "startDate": "2025-01-24T11:12:51.515Z",
+      "endDate": "2025-01-24T11:12:51.515Z",
+      "userId": "1",
+      "status": "APPROVED"
+    },
+    {
+      "id": "2df3",
+      "name": "qq",
+      "startDate": "2025-01-24T11:37:14.304Z",
+      "endDate": "2025-01-24T11:37:14.304Z",
+      "userId": "1",
+      "status": "PENDING_APPROVAL"
+    },
+    {
+      "id": "0679",
+      "name": "adsads",
+      "startDate": "2025-01-24T11:37:33.766Z",
+      "endDate": "2025-01-24T11:37:33.766Z",
+      "userId": "1",
       "status": "DRAFT"
     }
   ],
@@ -297,6 +329,39 @@
       "to": "",
       "departureDateTime": "2025-01-22T02:58",
       "arrivalDateTime": "2025-01-24T09:58:00.837Z"
+    },
+    {
+      "id": "c4a3",
+      "type": "FLIGHT",
+      "totalPrice": 23,
+      "tripId": "7074",
+      "airline": "",
+      "from": "",
+      "to": "",
+      "departureDateTime": "2025-01-24T11:25:34.397Z",
+      "arrivalDateTime": "2025-01-24T11:25:34.397Z"
+    },
+    {
+      "id": "99a2",
+      "type": "FLIGHT",
+      "totalPrice": 3,
+      "tripId": "7074",
+      "airline": "sdadas",
+      "from": "",
+      "to": "",
+      "departureDateTime": "2025-01-24T11:26:46.881Z",
+      "arrivalDateTime": "2025-01-24T11:26:46.881Z"
+    },
+    {
+      "id": "9021",
+      "type": "FLIGHT",
+      "totalPrice": 12,
+      "tripId": "7074",
+      "airline": "",
+      "from": "",
+      "to": "",
+      "departureDateTime": "2025-01-24T11:28:51.278Z",
+      "arrivalDateTime": "2025-01-24T11:28:51.278Z"
     }
   ],
   "users": [
@@ -323,14 +388,6 @@
     }
   ],
   "sessions": [
-    {
-      "id": "1",
-      "createdAt": "2025-01-24T08:20:26.128Z"
-    },
-    {
-      "id": "1",
-      "createdAt": "2025-01-24T08:20:41.380Z"
-    },
     {
       "id": "1",
       "createdAt": "2025-01-24T08:41:41.312Z"
@@ -502,6 +559,18 @@
     {
       "id": "2",
       "createdAt": "2025-01-24T10:51:09.625Z"
+    },
+    {
+      "id": "1",
+      "createdAt": "2025-01-24T11:11:58.050Z"
+    },
+    {
+      "id": "2",
+      "createdAt": "2025-01-24T11:13:58.118Z"
+    },
+    {
+      "id": "1",
+      "createdAt": "2025-01-24T11:25:01.751Z"
     }
   ]
 }

@@ -3,6 +3,7 @@ import { Injectable, computed, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, finalize, tap, throwError } from 'rxjs';
 import { Trip } from '../models/trip.model';
+import { BroadcastService } from './broadcast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +21,22 @@ export class TripService {
   readonly isLoading = computed(() => this.isLoadingSignal());
   readonly error = computed(() => this.errorSignal());
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private broadcastService: BroadcastService
+  ) {
     this.loadTrips();
+
+    // Subscribe to broadcast messages
+    this.broadcastService.messages$.subscribe(message => {
+      switch (message.type) {
+        case 'TRIP_UPDATE':
+        case 'EXPENSE_UPDATE':
+        case 'STATUS_UPDATE':
+          this.loadTrips();
+          break;
+      }
+    });
   }
 
   loadTrips() {
@@ -46,6 +61,7 @@ export class TripService {
     return this.http.post<Trip>(`${this.apiUrl}/trips`, trip).pipe(
       tap(newTrip => {
         this.tripsSignal.update(trips => [...trips, newTrip]);
+        this.broadcastService.broadcast({ type: 'TRIP_UPDATE' });
       }),
       catchError(error => {
         this.errorSignal.set('Failed to create trip');
@@ -91,6 +107,7 @@ export class TripService {
         this.tripsSignal.update(trips =>
           trips.map(t => t.id === tripId ? updatedTrip : t)
         );
+        this.broadcastService.broadcast({ type: 'STATUS_UPDATE', data: { tripId, status } });
       }),
       catchError(error => {
         console.error('Failed to update trip status:', error);
@@ -174,6 +191,7 @@ export class TripService {
     return this.http.post<any>(`${this.apiUrl}/expenses`, expenseData).pipe(
       tap(newExpense => {
         this.loadTripExpenses(newExpense.tripId);
+        this.broadcastService.broadcast({ type: 'EXPENSE_UPDATE', data: { tripId: newExpense.tripId } });
       }),
       catchError(error => {
         this.errorSignal.set('Failed to create expense');
