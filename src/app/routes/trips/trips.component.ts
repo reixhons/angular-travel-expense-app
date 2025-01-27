@@ -25,7 +25,8 @@ import { CustomDialogComponent } from '../../components/custom-dialog/custom-dia
     MatProgressSpinnerModule,
     RouterModule
   ],
-  templateUrl: './trips.component.html'
+  templateUrl: './trips.component.html',
+  styleUrl: './trips.component.scss'
 })
 export class TripsComponent implements OnInit {
   readonly trips: Signal<Trip[]>;

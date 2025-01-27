@@ -12,12 +12,12 @@ export class TripService {
   private apiUrl = 'http://localhost:3000';
 
   private tripsSignal = signal<Trip[]>([]);
-  private expensesMap = signal<Map<string, number>>(new Map());
+  private expensesSignal = signal<Expense[]>([]);
   private isLoadingSignal = signal(false);
   private errorSignal = signal<string | null>(null);
 
   readonly trips = computed(() => this.tripsSignal());
-  readonly expenses = computed(() => this.expensesMap());
+  readonly expenses = computed(() => this.expensesSignal());
   readonly isLoading = computed(() => this.isLoadingSignal());
   readonly error = computed(() => this.errorSignal());
 
@@ -72,13 +72,13 @@ export class TripService {
   }
 
   private loadTripExpenses(tripId: string) {
-    this.http.get<any[]>(`${this.apiUrl}/expenses?tripId=${tripId}`).subscribe({
+    this.http.get<Expense[]>(`${this.apiUrl}/expenses?tripId=${tripId}`).subscribe({
       next: (expenses) => {
-        const total = expenses.reduce((sum, expense) => sum + expense.totalPrice, 0);
-        this.expensesMap.update(map => {
-          const newMap = new Map(map);
-          newMap.set(tripId, total);
-          return newMap;
+        this.expensesSignal.update(currentExpenses => {
+          // Remove existing expenses for this trip
+          const filteredExpenses = currentExpenses.filter(e => e.tripId !== tripId);
+          // Add new expenses
+          return [...filteredExpenses, ...expenses];
         });
       },
       error: () => this.errorSignal.set('Failed to load expenses')
@@ -93,7 +93,8 @@ export class TripService {
   }
 
   getTripExpenses(tripId: string): number {
-    return this.expensesMap()?.get(tripId) || 0;
+    const tripExpenses = this.expensesSignal().filter(e => e.tripId === tripId);
+    return tripExpenses.reduce((sum, expense) => sum + expense.totalPrice, 0);
   }
 
   updateTripStatus(tripId: string, status: TripStatus, note?: string): Observable<Trip> {
@@ -216,4 +217,6 @@ export class TripService {
       finalize(() => this.isLoadingSignal.set(false))
     );
   }
+
+
 }

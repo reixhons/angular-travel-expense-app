@@ -1,0 +1,250 @@
+.top-trips {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    max-width: 91.25rem;
+    width: 100%;
+    margin-top: 5.75rem;
+    margin-bottom: 4rem;
+}
+
+.container-2 {
+    max-width: 91.25rem;
+    width: 100%;
+
+    margin-bottom: 4rem;
+}
+
+h1 {
+    color: rgba(255, 255, 255, 0.80);
+    font-family: Manrope;
+    font-size: 2.625rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+h4 {
+    color: rgba(255, 255, 255, 0.50);
+    font-size: 1.375rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 2.25rem;
+    margin-top: 0.7rem;
+    max-width: 48rem;
+}
+
+.grid-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 5.38rem;
+
+}
+
+.grid-header .left {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+}
+
+.grid-header .left .label {
+    color: rgba(255, 255, 255, 0.80);
+    text-align: center;
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.55rem 2.5rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1.9375rem;
+    border: 1px solid rgba(136, 189, 251, 0.20);
+    background: rgba(214, 238, 255, 0.03);
+    box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.10) inset, 0px 2px 3px 0px rgba(0, 0, 0, 0.20);
+    height: 2.6875rem;
+}
+
+.grid-header .left .count {
+    display: flex;
+    width: 3.0625rem;
+    height: 2.6875rem;
+    padding: 0.75rem 1.25rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.625rem;
+    flex-shrink: 0;
+    color: rgba(255, 255, 255, 0.80);
+    text-align: center;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    border-radius: 2.25rem;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.04) 100%);
+}
+
+.note-container {
+    margin-bottom: 4rem;
+    padding: 2rem 2rem 0rem 2rem;
+}
+
+.note-container .top {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.note-container .top .label {
+    color: #FFF;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.875rem;
+}
+
+.note-container .divider {
+    margin: 1.5rem 0 1.25rem 0;
+}
+
+.note-container .bottom {
+    color: rgba(255, 255, 255, 0.50);
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.875rem;
+}
+
+.approval-container {
+    margin-top: 1rem;
+    padding: 1.5rem 2rem 2rem 2rem;
+}
+
+.approval-container .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.approval-container .top .left {
+    display: flex;
+    align-items: center;
+    gap: 1.88rem;
+    color: #FFF;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.875rem;
+    /* 150% */
+}
+
+.approval-container .top .left .label,
+.approval-container .top .left .value {
+    display: flex;
+    align-items: center;
+    gap: 1.88rem;
+    color: #FFF;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.875rem;
+}
+
+.divider {
+    margin: 1.5rem 0 1.25rem 0;
+}
+
+.trip-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 3rem;
+    margin-top: 2rem;
+}
+
+.trip-info .info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.trip-info .info .right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.trip-info .info .right .label {
+    color: rgba(255, 255, 255, 0.50);
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.trip-info .info .right .value {
+    color: rgba(255, 255, 255, 0.80);
+    font-family: Manrope;
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.green-style {
+    color: #68FF49 !important;
+}
+
+.container-below {
+    margin-top: 2rem;
+    border: none;
+    background: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.container-below .left {
+    flex: 1;
+}
+
+.container-below .right {
+    flex: 1;
+}
+
+.up .label {
+    color: #FFF;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.875rem;
+    /* 150% */
+}
+
+.expenses {
+    margin-top: 2rem;
+}
+
+.expenses .label {
+    color: #FFF;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.875rem;
+    /* 150% */
+}
+
+.expense {
+    width: 100%;
+    flex: 1;
+}

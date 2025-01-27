@@ -1,0 +1,15 @@
+<nav>
+    <div class="navbar-container">
+        <div class="left">
+            <div class="image">
+                <img src="images/profile_pic.png" alt="logo">
+            </div>
+            <p class="name">
+                {{ userName() || 'Guest' }}
+            </p>
+        </div>
+        <div class="right">
+            <button class="logout-button" (click)="logout()">Logout</button>
+        </div>
+    </div>
+</nav>

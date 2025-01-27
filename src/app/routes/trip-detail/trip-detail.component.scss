@@ -1,3 +1,194 @@
-.div.mat-mdc-select-panel {
-    background-color: rgb(255, 255, 255) !important;
+.top-details {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    max-width: 91.25rem;
+    width: 100%;
+    margin: 5.75rem 0 6rem;
+}
+
+.header {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+
+h1 {
+    color: rgba(255, 255, 255, 0.80);
+    font-family: Manrope;
+    font-size: 2.625rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.trip-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 3rem;
+    margin-top: 5rem;
+}
+
+.trip-info .info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.trip-info .info .right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.trip-info .info .right .label {
+    color: rgba(255, 255, 255, 0.50);
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.trip-info .info .right .value {
+    color: rgba(255, 255, 255, 0.80);
+    font-family: Manrope;
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.note-container {
+    margin-top: 4rem;
+    padding: 2rem 2rem 1.3rem 2rem;
+    width: 50%;
+}
+
+.note-container .top {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.note-container .top .label {
+    color: #FFF;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.875rem;
+}
+
+.note-container .divider {
+    margin: 1.5rem 0 1.25rem 0;
+}
+
+.note-container .bottom {
+    color: rgba(255, 255, 255, 0.50);
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.875rem;
+}
+
+.add-categories {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    margin: 3rem 0 2rem 0;
+}
+
+.expenses {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.expense.box-style {
+    padding: 1.5rem 2rem 2.25rem 2rem;
+    width: 100%;
+}
+
+.expense .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.25rem;
+    width: 100%;
+}
+
+.expense .top .left {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.expense .top .label {
+    color: #FFF;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.875rem;
+}
+
+.expense .top .value {
+    color: #68FF49;
+    text-align: center;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.expense .divider {
+    margin: 1.5rem 0 2rem 0;
+}
+
+.expense .bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 4rem;
+}
+
+.expense .bottom .group {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 0.56rem;
+    flex-direction: column;
+    min-width: 13rem;
+}
+
+.expense .bottom .group .label {
+    color: rgba(255, 255, 255, 0.50);
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.expense .bottom .group .value {
+    color: #FFF;
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
 }

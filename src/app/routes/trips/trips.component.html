@@ -1,37 +1,25 @@
-<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-12">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Header Section -->
-        <div class="bg-white rounded-2xl shadow-lg p-8 mb-8 backdrop-blur-lg bg-opacity-90">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
-                <div class="space-y-2">
-                    <h1
-                        class="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-blue-500 bg-clip-text text-transparent">
-                        Hello, {{userName()}}
-                    </h1>
-                    <p class="text-gray-600">Manage your travel adventures</p>
-                </div>
-                <div class="flex gap-4">
-                    <button mat-raised-button color="primary"
-                        class="!rounded-xl !px-6 !py-2.5 !bg-gradient-to-r !from-indigo-600 !to-blue-500 !shadow-lg hover:!shadow-xl !border-0 transition-all duration-200"
-                        [disabled]="isLoading()" (click)="openCustomDialog()">
-                        <mat-icon class="mr-2">add</mat-icon>
-                        New Trip
-                    </button>
-                    <button mat-stroked-button
-                        class="!rounded-xl !px-6 !py-2.5 !border-red-500 !text-red-500 hover:!bg-red-50 !shadow-sm hover:!shadow-md transition-all duration-200"
-                        (click)="logout()" [disabled]="isLoading()">
-                        <mat-icon class="mr-2">logout</mat-icon>
-                        Logout
-                    </button>
-                </div>
+<div class="top-trips">
+    <div class="container fade-in">
+        <h1>Hello there!</h1>
+        <h4>Keep all your travel expenses organized in one place, gain insights into your spending, and make budgeting
+            hassle-free.</h4>
+        <div class="grid-header">
+            <div class="left">
+                <div class="label">My Trips</div>
+                <div class="count">8</div>
+            </div>
+            <div class="right">
+                <button class="add-button" (click)="openCustomDialog()">
+                    <img src="icons/plus.svg" alt="add">
+                    Add Trip</button>
             </div>
         </div>
 
         @if (error()) {
-        <div class="bg-red-50 border-l-4 border-red-400 p-4 rounded-xl mb-8 shadow-md">
+        <div class="bg-red-500 border-l-4 border-red-400 p-4 rounded-xl mb-8 shadow-md">
             <div class="flex items-center">
-                <mat-icon class="text-red-400 mr-3">error_outline</mat-icon>
-                <p class="text-red-700 font-medium">{{ error() }}</p>
+                <mat-icon class="text-red-100 mr-3">error_outline</mat-icon>
+                <p class="text-red-100 font-medium">{{ error() }}</p>
             </div>
         </div>
         }
@@ -42,64 +30,45 @@
         </div>
         } @else {
         @if (!trips().length) {
-        <div class="text-center py-20 bg-white rounded-2xl shadow-lg backdrop-blur-lg bg-opacity-90">
-            <div class="flex flex-col items-center gap-4">
-                <div class="w-20 h-20 rounded-full bg-indigo-100 flex items-center justify-center mb-2">
-                    <mat-icon class="text-indigo-600 !w-12 !h-12 !text-5xl">flight_takeoff</mat-icon>
-                </div>
-                <h2 class="text-2xl font-semibold text-gray-800">No trips yet</h2>
-                <p class="text-gray-600 max-w-md">Start planning your next adventure by creating your first trip!</p>
-                <button mat-raised-button color="primary"
-                    class="!mt-4 !rounded-xl !px-8 !py-3 !bg-gradient-to-r !from-indigo-600 !to-blue-500"
-                    (click)="openCustomDialog()">
-                    <mat-icon class="mr-2">add</mat-icon>
-                    Create Trip
-                </button>
-            </div>
+        <div class="flex justify-center items-center h-64">
+            <p class="text-gray-500 font-medium">No trips found</p>
         </div>
         } @else {
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <div class="trips-container">
             @for (trip of trips(); track trip.id) {
-            <mat-card
-                class="!rounded-2xl !shadow-lg hover:!shadow-xl !overflow-hidden !border-0 !bg-white !backdrop-blur-lg !bg-opacity-90 transform hover:scale-[1.02] transition-all duration-200">
-                <div class="absolute top-4 right-4">
+            <div class="trip-card">
+                <div class="header">
+                    <div [class]="'status-badge colored-status  ' + getStatusClass(trip.status)">{{ trip.status }}
+                    </div>
                     @if (trip.status === 'DRAFT') {
-                    <button mat-mini-fab color="primary" class="!bg-indigo-600" (click)="updateTripStatus(trip)">
-                        <mat-icon>send</mat-icon>
-                    </button>
-                    } @else {
-                    <div [class]="'status-badge ' + getStatusClass(trip.status)">
-                        {{ trip.status }}
+                    <div class="approve" (click)="updateTripStatus(trip)">
+                        <img src="icons/send.svg" alt="approve">
                     </div>
                     }
                 </div>
-                <mat-card-header class="!pb-4 !pt-6 !px-6">
-                    <mat-card-title class="!text-2xl !font-bold !text-gray-800">{{ trip.name }}</mat-card-title>
-                    <mat-card-subtitle class="!mt-2 !text-gray-600">
-                        {{ getTripDuration(trip.startDate, trip.endDate) }} days journey
-                    </mat-card-subtitle>
-                </mat-card-header>
-                <mat-card-content class="!px-6 !py-4 !border-t !border-gray-100">
-                    <div class="flex flex-col gap-4">
-                        <div class="flex items-center text-gray-700">
-                            <mat-icon class="!w-5 !h-5 !text-lg mr-3 text-indigo-500">calendar_today</mat-icon>
-                            <span>{{ trip.startDate | date:'mediumDate' }} - {{ trip.endDate | date:'mediumDate'
-                                }}</span>
+                <div class="circle"></div>
+                <div class="trip-info">
+                    <div class="title">{{ trip.name }}</div>
+                    <div class="duration">{{ getTripDuration(trip.startDate, trip.endDate) }} Days Journey</div>
+                </div>
+                <div class="stat">
+                    <div class="date">
+                        <div class="icon">
+                            <img src="icons/calendar-filled.svg" alt="calendar">
                         </div>
-                        <div class="flex items-center text-gray-700">
-                            <mat-icon class="!w-5 !h-5 !text-lg mr-3 text-green-500">attach_money</mat-icon>
-                            <span class="font-semibold">{{ getTripExpenses(trip.id) | currency }}</span>
-                        </div>
+                        <span>{{ trip.startDate | date:'mediumDate' }} - {{ trip.endDate | date:'mediumDate'
+                            }}</span>
                     </div>
-                </mat-card-content>
-                <mat-card-actions class="!p-4 !bg-gray-50 flex justify-end">
-                    <button mat-flat-button color="primary" [routerLink]="['/trips', trip.id]"
-                        class="!rounded-xl !px-6 !bg-gradient-to-r !from-indigo-600 !to-blue-500">
-                        <mat-icon class="mr-2">visibility</mat-icon>
-                        View Details
-                    </button>
-                </mat-card-actions>
-            </mat-card>
+                    <div class="budget">
+                        <div class="icon"><img src="icons/dollar.svg" alt="money"></div> <span>{{
+                            getTripExpenses(trip.id) | currency }}</span>
+                    </div>
+                </div>
+                <button class="view-details" [routerLink]="['/trips', trip.id]">
+                    View Details
+                </button>
+            </div>
             }
         </div>
         }

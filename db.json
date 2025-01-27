@@ -5,7 +5,7 @@
       "name": "Conference in San Francisco",
       "startDate": "2025-02-10",
       "endDate": "2025-02-15",
-      "status": "APPROVED",
+      "status": "CANCELLED",
       "userId": "1",
       "approverNote": "Enjoy the event!"
     },
@@ -22,7 +22,7 @@
       "name": "Team Building Retreat",
       "startDate": "2025-04-05",
       "endDate": "2025-04-07",
-      "status": "IN_PROCESS",
+      "status": "REFUNDED",
       "userId": "1",
       "approverNote": "Finalizing arrangements."
     },
@@ -39,9 +39,17 @@
       "name": "Business Trip to Tokyo",
       "startDate": "2025-05-15",
       "endDate": "2025-05-20",
-      "status": "APPROVED",
+      "status": "PENDING_APPROVAL",
       "userId": "1",
       "approverNote": "Have a productive trip!"
+    },
+    {
+      "id": "d19f",
+      "name": "Super Trip",
+      "startDate": "2025-01-29",
+      "endDate": "2025-02-01",
+      "userId": "1",
+      "status": "DRAFT"
     }
   ],
   "expenses": [
@@ -127,6 +135,44 @@
       "location": "Tokyo, Japan",
       "checkInDate": "2025-05-15",
       "checkOutDate": "2025-05-20"
+    },
+    {
+      "id": "9d7a",
+      "type": "TAXI",
+      "totalPrice": 50,
+      "tripId": "5",
+      "from": "LAX",
+      "to": "Usa",
+      "dateTime": "2025-01-09T11:24"
+    },
+    {
+      "id": "d882",
+      "type": "FLIGHT",
+      "totalPrice": 22222,
+      "tripId": "5",
+      "airline": "",
+      "from": "Monaco",
+      "to": "Tirona",
+      "departureDateTime": "2025-01-27T08:37:10.260Z",
+      "arrivalDateTime": "2025-01-27T08:37:10.260Z"
+    },
+    {
+      "id": "8989",
+      "type": "CAR_RENTAL",
+      "totalPrice": 0,
+      "tripId": "5",
+      "carName": "asdasdasd",
+      "pickupDateTime": "2025-01-10T09:39",
+      "dropoffDateTime": "2025-01-24T09:39"
+    },
+    {
+      "id": "cff0",
+      "type": "CAR_RENTAL",
+      "totalPrice": 0,
+      "tripId": "5",
+      "carName": "",
+      "pickupDateTime": "2025-01-27T08:40:05.784Z",
+      "dropoffDateTime": "2025-01-27T08:40:05.784Z"
     }
   ],
   "users": [
@@ -154,16 +200,24 @@
   ],
   "sessions": [
     {
-      "id": "2",
-      "createdAt": "2025-01-27T04:13:37.029Z"
+      "id": "1",
+      "createdAt": "2025-01-27T05:54:45.199Z"
     },
     {
       "id": "2",
-      "createdAt": "2025-01-27T04:13:43.610Z"
+      "createdAt": "2025-01-27T08:47:09.239Z"
+    },
+    {
+      "id": "2",
+      "createdAt": "2025-01-27T08:47:44.830Z"
     },
     {
       "id": "3",
-      "createdAt": "2025-01-27T04:13:47.400Z"
+      "createdAt": "2025-01-27T09:57:48.504Z"
+    },
+    {
+      "id": "1",
+      "createdAt": "2025-01-27T09:58:23.600Z"
     }
   ]
 }

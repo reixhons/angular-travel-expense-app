@@ -137,6 +137,15 @@ export class AuthService {
     return this.currentUser();
   }
 
+  getUserById(userId: string): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/users/${userId}`).pipe(
+      catchError(error => {
+        console.error('Error loading user:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
   hasRole(role: UserRole): boolean {
     return this.currentUser()?.role === role;
   }

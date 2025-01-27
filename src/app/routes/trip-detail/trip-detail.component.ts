@@ -4,7 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { TripService } from '../../services/trip.service';
 import { Trip, Expense, ExpenseType, TripStatus } from '../../models/trip.model';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -28,9 +28,11 @@ import { MatOptionModule } from '@angular/material/core';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatSelectModule
+    MatSelectModule,
+    RouterModule
   ],
-  templateUrl: './trip-detail.component.html'
+  templateUrl: './trip-detail.component.html',
+  styleUrls: ['./trip-detail.component.scss']
 })
 export class TripDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -103,16 +105,15 @@ export class TripDetailComponent implements OnInit {
     }
   }
 
-  addNewExpense() {
-    if (!this.selectedExpenseType) return;
+  addNewExpense(type: string) {
     if (!this.trip) return;
 
     const dialogRef = this.dialog.open(CustomDialogComponent, {
-      width: '600px',
+      width: '400px',
       data: {
         dataType: 'Expense',
         isEditable: true,
-        type: this.selectedExpenseType,
+        type: type,
         tripId: this.trip.id,
       }
     });
@@ -130,7 +131,7 @@ export class TripDetailComponent implements OnInit {
       return;
     }
     const dialogRef = this.dialog.open(CustomDialogComponent, {
-      width: '600px',
+      width: '400px',
       data: {
         dataType: 'Expense',
         event: "Edit",
@@ -149,7 +150,7 @@ export class TripDetailComponent implements OnInit {
 
   viewExpense(expense: Expense) {
     this.dialog.open(CustomDialogComponent, {
-      width: '600px',
+      width: '400px',
       data: {
         message: 'editExpense',
         isEditable: false,

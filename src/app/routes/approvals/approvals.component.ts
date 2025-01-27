@@ -8,6 +8,9 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { TripService } from '../../services/trip.service';
 import { Trip, TripStatus, Expense } from '../../models/trip.model';
+import { AuthService } from '../../services/auth.service';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { CustomDialogComponent } from '../../components/custom-dialog/custom-dialog.component';
 
 @Component({
   selector: 'app-approvals',
@@ -19,16 +22,23 @@ import { Trip, TripStatus, Expense } from '../../models/trip.model';
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    MatDialogModule
   ],
-  templateUrl: './approvals.component.html'
+  templateUrl: './approvals.component.html',
+  styleUrls: ['./approvals.component.scss']
 })
 export class ApprovalsComponent implements OnInit {
   pendingTrips: Trip[] = [];
-  approverNotes: { [key: string]: string } = {};
   tripExpenses: { [key: string]: Expense[] } = {};
+  approverNotes: { [key: string]: string } = {};
+  userNames: { [key: string]: string } = {};
 
-  constructor(private tripService: TripService) { }
+  constructor(
+    private tripService: TripService,
+    private authService: AuthService,
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit() {
     this.loadPendingTrips();
@@ -41,6 +51,7 @@ export class ApprovalsComponent implements OnInit {
         trips.forEach(trip => {
           this.approverNotes[trip.id] = '';
           this.loadTripExpenses(trip.id);
+          this.loadUserName(trip.userId);
         });
       },
       error: (error) => console.error('Error loading pending trips:', error)
@@ -53,6 +64,31 @@ export class ApprovalsComponent implements OnInit {
         this.tripExpenses[tripId] = expenses;
       },
       error: (error) => console.error('Error loading expenses:', error)
+    });
+  }
+
+  loadUserName(userId: string) {
+    this.authService.getUserById(userId).subscribe({
+      next: (user) => {
+        if (user) {
+          this.userNames[userId] = user.name;
+        }
+      },
+      error: (error) => console.error('Error loading user:', error)
+    });
+  }
+
+  viewExpense(expense: Expense) {
+    this.dialog.open(CustomDialogComponent, {
+      width: '400px',
+      data: {
+        dataType: 'Expense',
+        event: 'View',
+        isEditable: false,
+        expenseId: expense.id,
+        type: expense.type,
+        tripId: expense.tripId
+      }
     });
   }
 
@@ -75,8 +111,6 @@ export class ApprovalsComponent implements OnInit {
       error: (error) => console.error('Error cancelling trip:', error)
     });
   }
-
-
 
   getTotalExpenses(tripId: string): number {
     return this.tripExpenses[tripId]?.reduce((sum, expense) => sum + expense.totalPrice, 0) || 0;
