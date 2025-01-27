@@ -119,7 +119,10 @@ export class AuthService {
     }
 
     return this.http.delete(`${this.apiUrl}/sessions/${userId}`).pipe(
-      tap(() => this.currentUser.set(null)),
+      tap(() => {
+        this.currentUser.set(null);
+        localStorage.removeItem('currentUser');
+      }),
       map(() => true),
       catchError(error => {
         console.error('Logout failed:', error);

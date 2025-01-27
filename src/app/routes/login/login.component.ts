@@ -29,6 +29,12 @@ export class LoginComponent {
     private router: Router
   ) { }
 
+  login(email: string, password: string) {
+    this.email = email;
+    this.password = password;
+    this.onSubmit();
+  }
+
   onSubmit() {
     this.authService.login(this.email, this.password).subscribe({
       next: (success) => {

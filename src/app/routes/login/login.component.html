@@ -1,45 +1,49 @@
-<div
-    class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8 bg-white rounded-2xl shadow-lg p-8 backdrop-blur-lg bg-opacity-90">
-        <div class="text-center">
-            <div class="w-20 h-20 mx-auto rounded-full bg-indigo-100 flex items-center justify-center mb-4">
-                <mat-icon class="text-indigo-600 !w-12 !h-12 !text-5xl">account_circle</mat-icon>
-            </div>
-            <h2 class="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-blue-500 bg-clip-text text-transparent">
-                Welcome Back
-            </h2>
-            <p class="mt-2 text-gray-600">Sign in to your account</p>
+<div class="fixed bottom-0 left-0 w-full h-full">
+    <img src="images/login-bg.jpg" alt="Logo" class="w-full h-full object-cover">
+
+</div>
+<div class=" backdrop backdrop-up">
+</div>
+<div class="backdrop backdrop-down">
+</div>
+
+<div class="min-h-screen  flex items-center justify-center">
+    <div class="blurry-container flex flex-col items-center justify-center">
+        <div class="text-center flex flex-col items-center justify-center">
+            <img src="svg/logo.svg" alt="Logo">
+            <h4>Sign in with email</h4>
+            <p class="underheader">Track your travel expenses effortlessly and manage your budget with ease</p>
         </div>
 
-        <form (ngSubmit)="onSubmit()" #loginForm="ngForm" class="mt-8 space-y-6">
-            <div class="space-y-4">
-                <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                    <div class="mt-1 relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <mat-icon class="text-gray-400 !w-5 !h-5">mail</mat-icon>
-                        </div>
-                        <input id="email" name="email" type="email" [(ngModel)]="email" required
-                            class="pl-10 block w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200">
+        <form (ngSubmit)="onSubmit()" #loginForm="ngForm" class="mt-8">
+
+            <div class="flex flex-col gap-3">
+
+                <div class="relative">
+                    <div class="icon-container">
+                        <img src="icons/mail-filled.svg" alt="Email">
                     </div>
+                    <input id="email" name="email" type="email" [(ngModel)]="email" required
+                        placeholder="Email Address">
                 </div>
 
-                <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                    <div class="mt-1 relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <mat-icon class="text-gray-400 !w-5 !h-5">lock</mat-icon>
-                        </div>
-                        <input id="password" name="password" type="password" [(ngModel)]="password" required
-                            class="pl-10 block w-full rounded-xl border border-gray-300 p-3 focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 transition-all duration-200">
+
+                <div class="mt-1 relative">
+                    <div class="icon-container">
+                        <img src="icons/lock.svg" alt="Email">
                     </div>
+                    <input id="password" name="password" type="password" [(ngModel)]="password" required
+                        placeholder="Password">
                 </div>
+
             </div>
+
+            <p class="forgot-password">Forgot Password?</p>
 
             @if (authService.errorMessage()) {
             <div class="error-container">
-                <div class="flex items-center gap-2 text-red-600 bg-red-50 p-3 rounded-xl border border-red-100">
-                    <mat-icon class="!w-5 !h-5">error_outline</mat-icon>
+                <div class="flex text-red-600 error-message">
+                    <mat-icon class="!w-6 !h-6">error_outline</mat-icon>
                     <p class="text-sm">{{ authService.errorMessage() }}</p>
                 </div>
             </div>
@@ -47,16 +51,35 @@
 
             <div>
                 <button type="submit" [disabled]="!loginForm.form.valid || authService.loading()"
-                    class="w-full flex justify-center items-center gap-2 py-3 px-4 rounded-xl text-white bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-indigo-700 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200 font-medium">
+                    class="button-primary w-full">
                     @if (authService.loading()) {
                     <mat-spinner diameter="20" class="!text-white"></mat-spinner>
                     <span>Signing in...</span>
                     } @else {
-                    <mat-icon>login</mat-icon>
-                    <span>Sign in</span>
+                    <span>Get Started</span>
                     }
                 </button>
             </div>
         </form>
+        <div class="circle-container flex items-center w-full">
+            <div class="flex items-center">
+                <div class="circle" *ngFor="let i of [].constructor(10)"></div>
+            </div>
+            <span>Or continue directly</span>
+            <div class="flex items-center">
+                <div class="circle" *ngFor="let i of [].constructor(10)"></div>
+            </div>
+        </div>
+        <div class="quick">
+            <button (click)="login('user@example.com', '123')" class="container">
+                <img src="icons/guest.svg" alt="">
+            </button>
+            <button (click)="login('approver@example.com', '123')" class="container">
+                <img src="icons/approver.svg" alt="">
+            </button>
+            <button (click)="login('finance@example.com', '123')" class="container">
+                <img src="icons/bank.svg" alt="">
+            </button>
+        </div>
     </div>
 </div>
